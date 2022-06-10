@@ -55,6 +55,12 @@
     <Filter Include="01. View\00. MyForm\00. UnitTool">
       <UniqueIdentifier>{9cf770e1-5073-4a91-939f-439716648da6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. View\00. MyForm\01. MapTool">
+      <UniqueIdentifier>{ebf497ff-824f-4dd4-8a4b-da88ce92581a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. FileInfo">
+      <UniqueIdentifier>{e7ba4d1e-dce3-4b17-b75b-8ad6f382b3ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -111,6 +117,12 @@
     <ClInclude Include="UnitTool.h">
       <Filter>01. View\00. MyForm\00. UnitTool</Filter>
     </ClInclude>
+    <ClInclude Include="MapTool.h">
+      <Filter>01. View\00. MyForm\01. MapTool</Filter>
+    </ClInclude>
+    <ClInclude Include="FileInfo.h">
+      <Filter>06. FileInfo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -157,6 +169,12 @@
     </ClCompile>
     <ClCompile Include="UnitTool.cpp">
       <Filter>01. View\00. MyForm\00. UnitTool</Filter>
+    </ClCompile>
+    <ClCompile Include="MapTool.cpp">
+      <Filter>01. View\00. MyForm\01. MapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="FileInfo.cpp">
+      <Filter>06. FileInfo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

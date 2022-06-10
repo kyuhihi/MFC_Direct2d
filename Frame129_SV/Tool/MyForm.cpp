@@ -27,6 +27,7 @@ void CMyForm::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CMyForm, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMyForm::OnUnitTool)
+	ON_BN_CLICKED(IDC_BUTTON7, &CMyForm::OnMapTool)
 END_MESSAGE_MAP()
 
 
@@ -57,6 +58,7 @@ void CMyForm::OnInitialUpdate()
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	m_Font.CreatePointFont(100, L"궁서");
 	GetDlgItem(IDC_BUTTON1)->SetFont(&m_Font);
+	GetDlgItem(IDC_BUTTON7)->SetFont(&m_Font);
 }
 
 
@@ -68,4 +70,15 @@ void CMyForm::OnUnitTool()
 		m_UnitTool.Create(IDD_UNITTOOL);
 
 	m_UnitTool.ShowWindow(SW_SHOW);
+}
+
+
+void CMyForm::OnMapTool()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	if (nullptr == m_MapTool.GetSafeHwnd())
+		m_MapTool.Create(IDD_MAPTOOL);
+
+	m_MapTool.ShowWindow(SW_SHOW);
 }

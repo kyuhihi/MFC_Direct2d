@@ -16,8 +16,9 @@ CUnitTool::CUnitTool(CWnd* pParent /*=NULL*/)
 	, m_strTemp(_T(""))
 	, m_strCopy(_T(""))
 	, m_strName(_T(""))
-	, m_iHP(0)
+	, m_iHp(0)
 	, m_iAttack(0)
+	, m_strSearchData(_T(""))
 {
 
 }
@@ -33,7 +34,7 @@ void CUnitTool::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT1, m_strTemp);
 	DDX_Text(pDX, IDC_EDIT2, m_strCopy);
 	DDX_Text(pDX, IDC_EDIT3, m_strName);
-	DDX_Text(pDX, IDC_EDIT4, m_iHP);
+	DDX_Text(pDX, IDC_EDIT4, m_iHp);
 	DDX_Text(pDX, IDC_EDIT5, m_iAttack);
 
 	DDX_Control(pDX, IDC_LIST1, m_ListBox);
@@ -45,6 +46,8 @@ void CUnitTool::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK1, m_Check[0]);
 	DDX_Control(pDX, IDC_CHECK2, m_Check[1]);
 	DDX_Control(pDX, IDC_CHECK3, m_Check[2]);
+	DDX_Control(pDX, IDC_BUTTON1, m_Bitmap);
+	DDX_Text(pDX, IDC_EDIT6, m_strSearchData);
 }
 
 BEGIN_MESSAGE_MAP(CUnitTool, CDialog)
@@ -52,10 +55,12 @@ BEGIN_MESSAGE_MAP(CUnitTool, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON2, &CUnitTool::OnAdd_Charactor)
 	ON_LBN_SELCHANGE(IDC_LIST1, &CUnitTool::OnListBox)
 
-	ON_BN_CLICKED(IDC_BUTTON3, &CUnitTool::OnBnSave)
-	ON_BN_CLICKED(IDC_BUTTON4, &CUnitTool::OnBnRoad)
+	ON_BN_CLICKED(IDC_BUTTON3, &CUnitTool::OnBnSaveData)
+	ON_BN_CLICKED(IDC_BUTTON4, &CUnitTool::OnBnRoadData)
 
 	ON_WM_DESTROY()
+	ON_BN_CLICKED(IDC_BUTTON6, &CUnitTool::OnBnDeleteData)
+	ON_EN_CHANGE(IDC_EDIT6, &CUnitTool::OnBnSearchData)
 END_MESSAGE_MAP()
 
 
@@ -83,7 +88,7 @@ void CUnitTool::OnAdd_Charactor()
 	UNITDATA* pUnit = new UNITDATA;
 
 	pUnit->strName = m_strName;
-	pUnit->iHp = m_iHP;
+	pUnit->iHp = m_iHp;
 	pUnit->iAttack = m_iAttack;
 
 	for (int i = 0; i < 3; ++i)
@@ -94,6 +99,17 @@ void CUnitTool::OnAdd_Charactor()
 			break;
 		}
 	}
+
+	pUnit->byItem = 0x00;
+
+	if (m_Check[0].GetCheck())
+		pUnit->byItem = RUBY;
+
+	if (m_Check[1].GetCheck())
+		pUnit->byItem = DIAMOND;
+
+	if (m_Check[2].GetCheck())
+		pUnit->byItem = SAPPHIRE;
 
 	m_ListBox.AddString(pUnit->strName);
 
@@ -123,8 +139,9 @@ void CUnitTool::OnListBox()
 	}
 
 	m_strName = iter->second->strName;
-	m_iHP = iter->second->iHp;
+	m_iHp = iter->second->iHp;
 	m_iAttack = iter->second->iAttack;
+
 
 	for (int i = 0; i < 3; ++i)
 	{
@@ -133,20 +150,36 @@ void CUnitTool::OnListBox()
 
 	m_Radio[iter->second->byJobIndex].SetCheck(TRUE);
 
+
+	for (int i = 0; i < 3; ++i)
+	{
+		m_Check[i].SetCheck(FALSE);
+	}
+
+	if (RUBY == iter->second->byItem)
+		m_Check[0].SetCheck(TRUE);
+
+	if (DIAMOND == iter->second->byItem)
+		m_Check[1].SetCheck(TRUE);
+
+	if (SAPPHIRE == iter->second->byItem)
+		m_Check[2].SetCheck(TRUE);
+
 	UpdateData(FALSE);
 }
 
-void CUnitTool::OnBnSave()
+void CUnitTool::OnBnSaveData()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 
-	CFileDialog Dlg(FALSE, L"dat", L"*.dat", OFN_OVERWRITEPROMPT, L"Data File(*.dat) | *.dat||", this);
+	CFileDialog Dlg(FALSE, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, L"Data File(*.dat) | *.dat||", this);
 
 	TCHAR szPath[MAX_PATH] = L"";
 	GetCurrentDirectory(MAX_PATH, szPath);
 	PathRemoveFileSpec(szPath);
 	lstrcat(szPath, L"\\Data");
 	Dlg.m_ofn.lpstrInitialDir = szPath;
+	// Dlg.m_pOFN->lpstrInitialDir = szPath; 같은 코드(ofn 포인터 사용)
 
 
 	if (Dlg.DoModal())
@@ -156,10 +189,7 @@ void CUnitTool::OnBnSave()
 		HANDLE hFile = CreateFile(wstrFilePath.GetString(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 		if (INVALID_HANDLE_VALUE == hFile)
-		{
-			ERR_MSG(L"파일 개방 실패!");
 			return;
-		}
 
 		DWORD dwByte = 0;
 
@@ -173,12 +203,15 @@ void CUnitTool::OnBnSave()
 			WriteFile(hFile, &dwStringSize, sizeof(DWORD), &dwByte, nullptr);
 			// 내용을 저장
 			WriteFile(hFile, rPair.second->strName.GetString(), dwStringSize, &dwByte, nullptr);
+			//WriteFile(hFile, rPair.first.GetString(), dwStringSize, &dwByte, nullptr);
 
 			WriteFile(hFile, &rPair.second->iHp, sizeof(int), &dwByte, nullptr);
 
 			WriteFile(hFile, &rPair.second->iAttack, sizeof(int), &dwByte, nullptr);
 
 			WriteFile(hFile, &rPair.second->byJobIndex, sizeof(BYTE), &dwByte, nullptr);
+
+			WriteFile(hFile, &rPair.second->byItem, sizeof(BYTE), &dwByte, nullptr);
 		}
 
 		CloseHandle(hFile);
@@ -186,7 +219,7 @@ void CUnitTool::OnBnSave()
 }
 
 
-void CUnitTool::OnBnRoad()
+void CUnitTool::OnBnRoadData()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 
@@ -214,16 +247,14 @@ void CUnitTool::OnBnRoad()
 		HANDLE hFile = CreateFile(wstrFilePath.GetString(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 		if (INVALID_HANDLE_VALUE == hFile)
-		{
-			ERR_MSG(L"파일 개방 실패!");
 			return;
-		}
 
 		DWORD dwByte = 0;
 
 		DWORD dwStringSize = 0;
 
 		UNITDATA* pUnitData = nullptr;
+		//UNITDATA tData{};
 
 		while (true)
 		{
@@ -241,6 +272,8 @@ void CUnitTool::OnBnRoad()
 
 			ReadFile(hFile, &pUnitData->byJobIndex, sizeof(BYTE), &dwByte, nullptr);
 
+			ReadFile(hFile, &pUnitData->byItem, sizeof(BYTE), &dwByte, nullptr);
+
 			if (0 == dwByte)
 			{
 				Safe_Delete(pUnitData);
@@ -255,6 +288,12 @@ void CUnitTool::OnBnRoad()
 
 			pUnitData->strName = pTemp;
 
+			if (pTemp)
+			{
+				delete[] pTemp;
+				pTemp = nullptr;
+			}
+
 			m_mapUnitData.emplace(pUnitData->strName, pUnitData);
 
 			m_ListBox.AddString(pUnitData->strName);
@@ -262,12 +301,85 @@ void CUnitTool::OnBnRoad()
 		CloseHandle(hFile);
 	}
 }
+void CUnitTool::OnBnSearchData()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	UpdateData(TRUE);
+
+	auto& iter = m_mapUnitData.find(m_strSearchData);
+
+	if (iter == m_mapUnitData.end())
+		return;
+
+	int iIndex = m_ListBox.FindString(0, m_strSearchData);
+
+	if (LB_ERR == iIndex)
+		return;
+
+	m_ListBox.SetCurSel(iIndex);
+
+	m_strName = iter->second->strName;
+	m_iHp = iter->second->iHp;
+	m_iAttack = iter->second->iAttack;
+
+	for (int i = 0; i < 3; ++i)
+		m_Radio[i].SetCheck(FALSE);
+
+	m_Radio[iter->second->byJobIndex].SetCheck(TRUE);
+
+	for (int i = 0; i < 3; ++i)
+		m_Check[i].SetCheck(FALSE);
+
+	if (iter->second->byItem & RUBY)
+		m_Check[0].SetCheck(TRUE);
+
+	if (iter->second->byItem & DIAMOND)
+		m_Check[1].SetCheck(TRUE);
+
+	if (iter->second->byItem & SAPPHIRE)
+		m_Check[2].SetCheck(TRUE);
+
+	UpdateData(FALSE);
+}
+
+void CUnitTool::OnBnDeleteData()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	UpdateData(TRUE);
+
+	CString strFineName = L"";
+
+	int iSelect = m_ListBox.GetCurSel();
+
+	if (LB_ERR == iSelect)
+		return;
+
+	m_ListBox.GetText(iSelect, strFineName);
+
+	auto& iter = m_mapUnitData.find(strFineName);
+
+	if (iter == m_mapUnitData.end())
+		return;
+
+	Safe_Delete<UNITDATA*>(iter->second);
+	m_mapUnitData.erase(strFineName);
+
+	m_ListBox.DeleteString(iSelect);
+
+	UpdateData(FALSE);
+}
+
 
 void CUnitTool::OnDestroy()
 {
 	CDialog::OnDestroy();
 
 	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
+
+	for_each(m_mapUnitData.begin(), m_mapUnitData.end(), CDeleteMap());
+	m_mapUnitData.clear();
 }
 
 BOOL CUnitTool::OnInitDialog()
@@ -277,6 +389,10 @@ BOOL CUnitTool::OnInitDialog()
 	// TODO:  여기에 추가 초기화 작업을 추가합니다.
 
 	m_Radio[0].SetCheck(FALSE);
+
+	HBITMAP		hBitMap = (HBITMAP)LoadImage(nullptr, L"../Texture/JusinLogo1.bmp", IMAGE_BITMAP, 120, 60, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+
+	m_Bitmap.SetBitmap(hBitMap);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.

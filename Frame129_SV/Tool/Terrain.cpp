@@ -48,7 +48,7 @@ void CTerrain::Initialize(void)
 			m_vecTile.push_back(pTile);
 		}
 	}*/
-
+	// 스타듀타일 세팅
 	for (int i = 0; i < TILEY; ++i)
 	{
 		for (int j = 0; j < TILEX; ++j)

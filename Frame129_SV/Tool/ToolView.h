@@ -41,6 +41,7 @@ public:
 
 public:
 	CTerrain* Get_Terrain(void) { return m_pTerrain; }
+	void Set_ID(int _iID) { m_iID = _iID; }
 	bool Key_Down(int _iKey);
 
 private:

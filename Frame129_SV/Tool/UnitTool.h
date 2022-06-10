@@ -28,8 +28,10 @@ public:
 	afx_msg void OnAdd_Charactor();
 	afx_msg void OnListBox();
 
-	afx_msg void OnBnSave();
-	afx_msg void OnBnRoad();
+	afx_msg void OnBnSaveData();
+	afx_msg void OnBnRoadData();
+	afx_msg void OnBnSearchData();
+	afx_msg void OnBnDeleteData();
 
 	afx_msg void OnDestroy();
 	virtual BOOL OnInitDialog();
@@ -39,13 +41,16 @@ private:
 	CString m_strTemp;
 	CString m_strCopy;
 	CString m_strName;
-	int m_iHP;
+	CString m_strSearchData;
+
+	int m_iHp;
 	int m_iAttack;
 
 	// control
 	CListBox m_ListBox;
 	CButton m_Radio[3];
 	CButton m_Check[3];
+	CButton m_Bitmap;
 
 	// general
 	map<CString, UNITDATA*> m_mapUnitData;
