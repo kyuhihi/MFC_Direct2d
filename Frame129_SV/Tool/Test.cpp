@@ -102,21 +102,21 @@ void CTest::LateUpdate(void)
 		switch (m_ePlayer)
 		{
 		case CTest::P_STAND:
-			if (11 < m_RenCount)
+			if (3 < m_RenCount)
 			{
 				m_RenCount = 0;
 			}
 			break;
 
 		case CTest::P_WALK:
-			if (12 < m_RenCount)
+			if (3 < m_RenCount)
 			{
-				m_RenCount = 1;
+				m_RenCount = 0;
 			}
 			break;
 
 		case CTest::P_DASH:
-			if (10 < m_RenCount)
+			if (3 < m_RenCount)
 			{
 				m_RenCount = 0;
 			}
@@ -134,7 +134,7 @@ void CTest::Render(void)
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixScaling(&matScale, m_fLR, 1.f, 1.f);
 	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(0.f));
-	D3DXMatrixTranslation(&matTrans, m_tInfo.vPos.x - m_pMainView->GetScrollPos(0), m_tInfo.vPos.y - m_pMainView->GetScrollPos(1), 0.f);
+	D3DXMatrixTranslation(&matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 	matWorld = matScale * matRotZ * matTrans;
 
 	CDevice::Get_Instance()->Get_Sprite()->SetTransform(&matWorld);

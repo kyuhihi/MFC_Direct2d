@@ -15,6 +15,8 @@
 #include "MainFrm.h"
 #include "MiniView.h"
 
+#include "Test.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -98,41 +100,39 @@ void CToolView::OnInitialUpdate()
 
 	ZeroMemory(bKeyState, sizeof(bKeyState));
 
-	m_Test = CTest::Get_Instance();
-
 	// 대기 텍스쳐
-	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Player/Stand/AKIHA_AKI00_00%d.png", TEX_MULTI, L"Player", L"Stand", 12)))
+	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Cat/Down/Down0%d.png", TEX_MULTI, L"Cat", L"Down", 4)))
 	{
 		AfxMessageBox(L"Stand Image Insert failed");
 		return;
 	}
 	// 걷기 텍스쳐
-	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Player/Walk/AKIHA_AKI26_00%d.png", TEX_MULTI, L"Player", L"Walk", 13)))
+	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Cat/Right/Right0%d.png", TEX_MULTI, L"Cat", L"Right", 4)))
 	{
 		AfxMessageBox(L"Walk Image Insert failed");
 		return;
 	}
 	// 달리기 텍스쳐
-	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Player/Dash/AKIHA_AKI13_00%d.png", TEX_MULTI, L"Player", L"Dash", 11)))
+	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Cat/Up/Up0%d.png", TEX_MULTI, L"Cat", L"Up", 4)))
 	{
 		AfxMessageBox(L"Dash Image Insert failed");
 		return;
 	}
 
 	// 대기 세팅
-	for (int i = 0; i < 12; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
-		m_Test->Set_Stand(CTextureMgr::Get_Instance()->Get_Texture(L"Player", L"Stand", i), i);
+		CTest::Get_Instance()->Set_Stand(CTextureMgr::Get_Instance()->Get_Texture(L"Cat", L"Down", i), i);
 	}
 	// 걷기 세팅
-	for (int i = 0; i < 13; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
-		m_Test->Set_Walk(CTextureMgr::Get_Instance()->Get_Texture(L"Player", L"Walk", i), i);
+		CTest::Get_Instance()->Set_Walk(CTextureMgr::Get_Instance()->Get_Texture(L"Cat", L"Right", i), i);
 	}
 	// 달리기 세팅
-	for (int i = 0; i < 11; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
-		m_Test->Set_Dash(CTextureMgr::Get_Instance()->Get_Texture(L"Player", L"Dash", i), i);
+		CTest::Get_Instance()->Set_Dash(CTextureMgr::Get_Instance()->Get_Texture(L"Cat", L"Up", i), i);
 	}
 }
 
@@ -151,7 +151,7 @@ void CToolView::OnDraw(CDC* pDC)
 
 	m_pTerrain->Render();
 
-	m_Test->Render();
+	CTest::Get_Instance()->Render();
 
 	m_pDevice->Render_End();
 }

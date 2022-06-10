@@ -6,7 +6,6 @@
 
 #include "Device.h"
 #include "Terrain.h"
-#include "Test.h"
 
 class CToolDoc;
 class CToolView : public CScrollView 
@@ -50,8 +49,6 @@ private:
 	CTerrain* m_pTerrain;
 	bool bKeyState[VK_MAX];
 	int m_iID;
-
-	CTest* m_Test;
 
 // 생성된 메시지 맵 함수
 protected:
