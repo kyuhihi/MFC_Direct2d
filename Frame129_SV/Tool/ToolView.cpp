@@ -100,25 +100,30 @@ void CToolView::OnInitialUpdate()
 
 	ZeroMemory(bKeyState, sizeof(bKeyState));
 
-	// 대기 텍스쳐
+	// 아래 텍스쳐
 	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Cat/Down/Down0%d.png", TEX_MULTI, L"Cat", L"Down", 4)))
 	{
-		AfxMessageBox(L"Stand Image Insert failed");
+		AfxMessageBox(L"Down Image Insert failed");
 		return;
 	}
-	// 걷기 텍스쳐
+	// 오른쪽 텍스쳐
 	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Cat/Right/Right0%d.png", TEX_MULTI, L"Cat", L"Right", 4)))
 	{
-		AfxMessageBox(L"Walk Image Insert failed");
+		AfxMessageBox(L"Right Image Insert failed");
 		return;
 	}
-	// 달리기 텍스쳐
+	// 위 텍스쳐
 	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Cat/Up/Up0%d.png", TEX_MULTI, L"Cat", L"Up", 4)))
 	{
-		AfxMessageBox(L"Dash Image Insert failed");
+		AfxMessageBox(L"Down Image Insert failed");
 		return;
 	}
-
+	// idle 텍스쳐
+	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Cat/IDLE/IDLE0%d.png", TEX_MULTI, L"Cat", L"IDLE", 2)))
+	{
+		AfxMessageBox(L"IDLE Image Insert failed");
+		return;
+	}
 	// 대기 세팅
 	for (int i = 0; i < 4; ++i)
 	{
@@ -133,6 +138,10 @@ void CToolView::OnInitialUpdate()
 	for (int i = 0; i < 4; ++i)
 	{
 		CTest::Get_Instance()->Set_Dash(CTextureMgr::Get_Instance()->Get_Texture(L"Cat", L"Up", i), i);
+	}
+	for (int i = 0; i < 2; ++i)
+	{
+		CTest::Get_Instance()->Set_IDLE(CTextureMgr::Get_Instance()->Get_Texture(L"Cat", L"IDLE", i), i);
 	}
 }
 

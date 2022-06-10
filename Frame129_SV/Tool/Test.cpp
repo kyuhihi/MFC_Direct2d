@@ -123,6 +123,10 @@ void CTest::LateUpdate(void)
 			break;
 
 		case CTest::P_IDLE:
+			if (0 < m_RenCount)
+			{
+				m_RenCount = 0;
+			}
 			break;
 		}
 		m_dwRenCount = GetTickCount();
@@ -166,6 +170,11 @@ void CTest::Render(void)
 		break;
 
 	case CTest::P_IDLE:
+		m_pDevice->Get_Sprite()->Draw(m_pIDLE[m_RenCount]->pTexture,
+			nullptr,
+			&D3DXVECTOR3((m_pIDLE[m_RenCount]->tImgInfo.Width / 2), (m_pIDLE[m_RenCount]->tImgInfo.Height / 2), 0.f),
+			nullptr,
+			D3DCOLOR_ARGB(255, 255, 255, 255));
 		break;
 	}
 }
@@ -183,29 +192,31 @@ void CTest::Key_Input(void)
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
 		return;
 	}
-
-	if (GetAsyncKeyState('S'))
+	else if (GetAsyncKeyState('S'))
 	{
 		m_ePlayer = P_DOWN;
 		m_fAngle = D3DXToRadian(180.f);
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
 		return;
 	}
-
-	if (GetAsyncKeyState('D'))
+	else if (GetAsyncKeyState('D'))
 	{
 		m_ePlayer = P_LR;
 		m_fLR = 1.f;
 		m_fAngle = D3DXToRadian(90.f);
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
 	}
-
-	if (GetAsyncKeyState('A'))
+	else if (GetAsyncKeyState('A'))
 	{
 		m_ePlayer = P_LR;
 		m_fLR = -1.f;
 		m_fAngle = D3DXToRadian(270.f);
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
 	}
-
+	else 
+	{
+		m_RenCount = 0;
+		m_ePlayer = P_IDLE;
+		
+	}
 }
