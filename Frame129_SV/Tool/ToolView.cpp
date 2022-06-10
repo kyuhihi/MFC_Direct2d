@@ -14,7 +14,6 @@
 #include "TextureMgr.h"
 #include "MainFrm.h"
 #include "MiniView.h"
-
 #include "Test.h"
 
 #ifdef _DEBUG
@@ -262,6 +261,7 @@ bool CToolView::Key_Down(int _iKey)
 void CToolView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	m_pTerrain->Set_MouseTile(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), 5);
 
 	if (GetAsyncKeyState(VK_LBUTTON))
 	{
@@ -272,7 +272,7 @@ void CToolView::OnMouseMove(UINT nFlags, CPoint point)
 	{
 		OnRButtonDown(nFlags, point);
 	}
-
+	
 	CScrollView::OnMouseMove(nFlags, point);
 }
 

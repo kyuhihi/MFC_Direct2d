@@ -5,7 +5,7 @@
 #include "ToolView.h"
 
 
-CTerrain::CTerrain()
+CTerrain::CTerrain() : m_pMouseTile(), m_bMouseTileMove(false)
 {
 	m_vecTile.reserve(TILEX * TILEY);
 }
@@ -24,7 +24,7 @@ void CTerrain::Initialize(void)
 		return;
 	}*/
 	// ½ºÅ¸µàÅ¸ÀÏ
-	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Terrain/Tile/STile%d.png", TEX_MULTI, L"Terrain", L"STile", 5)))
+	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Terrain/Tile/STile%d.png", TEX_MULTI, L"Terrain", L"STile", 6)))
 	{
 		AfxMessageBox(L"Tile Image Insert failed");
 		return;
@@ -64,8 +64,11 @@ void CTerrain::Initialize(void)
 			pTile->byOption = 0;
 
 			m_vecTile.push_back(pTile);
+
 		}
 	}
+
+
 }
 
 void CTerrain::Update(void)
@@ -85,7 +88,6 @@ void CTerrain::Render(void)
 
 	float	fX = WINCX / float(rc.right - rc.left);
 	float	fY = WINCY / float(rc.bottom - rc.top);
-
 	for (auto& iter : m_vecTile)
 	{
 		D3DXMatrixIdentity(&matWorld);
@@ -96,7 +98,8 @@ void CTerrain::Render(void)
 
 		Set_Ratio(&matWorld, fX, fY, 0.f);
 
-		const TEXINFO* pTexInfo = CTextureMgr::Get_Instance()->Get_Texture(L"Terrain", L"STile", iter->byDrawID);
+
+		const TEXINFO*	pTexInfo = CTextureMgr::Get_Instance()->Get_Texture(L"Terrain", L"STile", iter->byDrawID);
 
 		if (nullptr == pTexInfo)
 			return;
@@ -111,9 +114,7 @@ void CTerrain::Render(void)
 			&D3DXVECTOR3(fX, fY, 0.f),
 			nullptr,
 			D3DCOLOR_ARGB(255, 255, 255, 255));
-
 		swprintf_s(szBuf, L"%d", iIndex);
-
 		CDevice::Get_Instance()->Get_Font()->DrawTextW(CDevice::Get_Instance()->Get_Sprite(),
 			szBuf,
 			lstrlen(szBuf),
@@ -122,6 +123,25 @@ void CTerrain::Render(void)
 			D3DCOLOR_ARGB(255, 0, 0, 0));
 
 		++iIndex;
+//===================================================
+		if (m_bMouseTileMove) 
+		{
+			const TEXINFO*	pTexInfo2;
+			if (iter->vPos == m_pMouseTile.vPos)
+			{
+				pTexInfo2 = CTextureMgr::Get_Instance()->Get_Texture(L"Terrain", L"STile", 5);
+			}
+			else
+				continue;
+			CDevice::Get_Instance()->Get_Sprite()->Draw(pTexInfo2->pTexture,
+				nullptr,
+				&D3DXVECTOR3(fX, fY, 0.f),
+				nullptr,
+				D3DCOLOR_ARGB(255, 255, 255, 255));
+		}
+//====================================================
+		
+
 	}
 }
 
@@ -276,6 +296,24 @@ bool CTerrain::Picking_Dot(const D3DXVECTOR3 & _vPos, const int & _iIndex)
 	}
 
 	return true;
+}
+
+bool CTerrain::Set_MouseTile(D3DXVECTOR3 _vPos, int  _byDrawID)
+{
+	m_bMouseTileMove = true;
+	for (auto& iter :m_vecTile)
+	{
+		if ((STILECX / 2) >= abs(iter->vPos.x - _vPos.x) && (STILECY / 2) >= abs(iter->vPos.y - _vPos.y))
+		{
+			m_pMouseTile.vPos = { iter->vPos };
+			return true;
+		}
+		else
+			continue;
+	}	
+
+	return false;
+
 }
 
 void CTerrain::Set_Ratio(D3DXMATRIX* _pOut, const float& _fX, const float& _fY, const float& _fZ)
