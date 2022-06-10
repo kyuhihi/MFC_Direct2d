@@ -8,7 +8,7 @@
 #endif
 
 #include "resource.h"       // 주 기호입니다.
-
+#include "Test.h"
 
 // CToolApp:
 // 이 클래스의 구현에 대해서는 Tool.cpp을 참조하십시오.
@@ -32,6 +32,8 @@ public:
 
 public:
 	virtual int Run();
+
+	CTest* m_Test;
 };
 
 extern CToolApp theApp;

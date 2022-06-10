@@ -28,6 +28,7 @@ void CMyForm::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CMyForm, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMyForm::OnUnitTool)
 	ON_BN_CLICKED(IDC_BUTTON7, &CMyForm::OnMapTool)
+	ON_BN_CLICKED(IDC_BUTTON2, &CMyForm::OnA_Star)
 END_MESSAGE_MAP()
 
 
@@ -81,4 +82,15 @@ void CMyForm::OnMapTool()
 		m_MapTool.Create(IDD_MAPTOOL);
 
 	m_MapTool.ShowWindow(SW_SHOW);
+}
+
+
+void CMyForm::OnA_Star()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	if (nullptr == m_A_Star.GetSafeHwnd())
+		m_A_Star.Create(IDD_A_STAR);
+
+	m_A_Star.ShowWindow(SW_SHOW);
 }

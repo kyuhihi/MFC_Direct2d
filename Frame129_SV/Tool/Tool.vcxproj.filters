@@ -61,6 +61,9 @@
     <Filter Include="06. FileInfo">
       <UniqueIdentifier>{e7ba4d1e-dce3-4b17-b75b-8ad6f382b3ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. View\00. MyForm\99. A_Star">
+      <UniqueIdentifier>{0b78b860-b11a-461d-9ef1-f12b666377cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -123,6 +126,9 @@
     <ClInclude Include="FileInfo.h">
       <Filter>06. FileInfo</Filter>
     </ClInclude>
+    <ClInclude Include="A_Star.h">
+      <Filter>01. View\00. MyForm\99. A_Star</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -175,6 +181,9 @@
     </ClCompile>
     <ClCompile Include="FileInfo.cpp">
       <Filter>06. FileInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="A_Star.cpp">
+      <Filter>01. View\00. MyForm\99. A_Star</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -97,6 +97,43 @@ void CToolView::OnInitialUpdate()
 	m_pTerrain->Set_MainView(this);
 
 	ZeroMemory(bKeyState, sizeof(bKeyState));
+
+	m_Test = CTest::Get_Instance();
+
+	// 대기 텍스쳐
+	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Player/Stand/AKIHA_AKI00_00%d.png", TEX_MULTI, L"Player", L"Stand", 12)))
+	{
+		AfxMessageBox(L"Stand Image Insert failed");
+		return;
+	}
+	// 걷기 텍스쳐
+	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Player/Walk/AKIHA_AKI26_00%d.png", TEX_MULTI, L"Player", L"Walk", 13)))
+	{
+		AfxMessageBox(L"Walk Image Insert failed");
+		return;
+	}
+	// 달리기 텍스쳐
+	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Player/Dash/AKIHA_AKI13_00%d.png", TEX_MULTI, L"Player", L"Dash", 11)))
+	{
+		AfxMessageBox(L"Dash Image Insert failed");
+		return;
+	}
+
+	// 대기 세팅
+	for (int i = 0; i < 12; ++i)
+	{
+		m_Test->Set_Stand(CTextureMgr::Get_Instance()->Get_Texture(L"Player", L"Stand", i), i);
+	}
+	// 걷기 세팅
+	for (int i = 0; i < 13; ++i)
+	{
+		m_Test->Set_Walk(CTextureMgr::Get_Instance()->Get_Texture(L"Player", L"Walk", i), i);
+	}
+	// 달리기 세팅
+	for (int i = 0; i < 11; ++i)
+	{
+		m_Test->Set_Dash(CTextureMgr::Get_Instance()->Get_Texture(L"Player", L"Dash", i), i);
+	}
 }
 
 // CToolView 그리기
@@ -113,6 +150,8 @@ void CToolView::OnDraw(CDC* pDC)
 	m_pDevice->Render_Begin();
 
 	m_pTerrain->Render();
+
+	m_Test->Render();
 
 	m_pDevice->Render_End();
 }

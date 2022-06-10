@@ -2,6 +2,7 @@
 
 #include "UnitTool.h"
 #include "MapTool.h"
+#include "A_Star.h"
 
 // CMyForm Æû ºäÀÔ´Ï´Ù.
 
@@ -38,8 +39,10 @@ private:
 
 	CUnitTool m_UnitTool;
 	CMapTool m_MapTool;
+	CA_Star m_A_Star;
 public:
 	afx_msg void OnMapTool();
+	afx_msg void OnA_Star();
 };
 
 

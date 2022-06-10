@@ -138,6 +138,8 @@ BOOL CToolApp::InitInstance()
 	//g_hWnd = m_pMainWnd->m_hWnd;
 #pragma endregion
 
+	m_Test = CTest::Get_Instance();
+
 	return TRUE;
 }
 
@@ -195,7 +197,9 @@ void CToolApp::OnAppAbout()
 
 BOOL CToolApp::OnIdle(LONG lCount)
 {
-	//InvalidateRect(g_hWnd, NULL, false);
+	m_Test->Update();
+	m_Test->LateUpdate();
+	InvalidateRect(g_hWnd, NULL, false);
 				
 	return TRUE;//CWinAppEx::OnIdle(lCount);
 }
