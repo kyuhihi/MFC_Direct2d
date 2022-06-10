@@ -68,7 +68,7 @@ void CTest::Initialize(void)
 		Set_Dash(CTextureMgr::Get_Instance()->Get_Texture(L"Player", L"Dash", i), i);
 	}*/
 
-	m_tInfo.vPos = { 65.f, 25.f, 0.f };
+	m_tInfo.vPos = { 100.f, 100.f, 0.f };
 	m_tInfo.vDir = { 0.f, 0.f, 0.f };
 	m_tInfo.vLook = { 0.f, -1.f, 0.f };
 
