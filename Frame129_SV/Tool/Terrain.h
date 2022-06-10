@@ -21,8 +21,9 @@ public:
 	int Get_TileIndex(const D3DXVECTOR3& _vPos);
 	bool Picking(const D3DXVECTOR3& _vPos, const int& _iIndex);
 	bool Picking_Dot(const D3DXVECTOR3& _vPos, const int& _iIndex);
-
-
+	vector<TILE*> Get_TileVector() { return m_vecTile; }
+	void Relese_Terrain();
+	void Set_Vector(vector<TILE*> _vecTile);
 public:
 	void Set_MainView(CToolView* _pMainView) { m_pMainView = _pMainView; }
 	void Set_Ratio(D3DXMATRIX* _pOut, const float& _fX, const float& _fY, const float& _fZ);
