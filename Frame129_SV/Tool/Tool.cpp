@@ -11,6 +11,8 @@
 #include "ToolDoc.h"
 #include "ToolView.h"
 
+#include "Test.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -136,9 +138,9 @@ BOOL CToolApp::InitInstance()
 	//m_pMainWnd->SetWindowPos(NULL, 0, 0, width, height, 0);
 
 	//g_hWnd = m_pMainWnd->m_hWnd;
-#pragma endregion
 
-	m_Test = CTest::Get_Instance();
+	CTest::Get_Instance()->Initialize();
+#pragma endregion
 
 	return TRUE;
 }
@@ -197,8 +199,8 @@ void CToolApp::OnAppAbout()
 
 BOOL CToolApp::OnIdle(LONG lCount)
 {
-	m_Test->Update();
-	m_Test->LateUpdate();
+	CTest::Get_Instance()->Update();
+	CTest::Get_Instance()->LateUpdate();
 	InvalidateRect(g_hWnd, NULL, false);
 				
 	return TRUE;//CWinAppEx::OnIdle(lCount);

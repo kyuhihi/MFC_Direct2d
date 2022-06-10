@@ -278,17 +278,6 @@ bool CTerrain::Picking_Dot(const D3DXVECTOR3 & _vPos, const int & _iIndex)
 	return true;
 }
 
-void CTerrain::Relese_Terrain()
-{
-	for_each(m_vecTile.begin(), m_vecTile.end(), CDeleteObj());
-	m_vecTile.clear();
-}
-
-void CTerrain::Set_Vector(vector<TILE*> _vecTile)
-{
-	m_vecTile = _vecTile;
-}
-
 void CTerrain::Set_Ratio(D3DXMATRIX* _pOut, const float& _fX, const float& _fY, const float& _fZ)
 {
 	// X

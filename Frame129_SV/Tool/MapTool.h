@@ -36,6 +36,4 @@ public:
 	CStatic m_Picture;
 
 	map<CString, CImage*> m_mapPngImg;
-	afx_msg void OnButtonSave();
-	afx_msg void OnButtonLoad();
 };

@@ -43,8 +43,6 @@ BEGIN_MESSAGE_MAP(CMapTool, CDialog)
 	ON_LBN_SELCHANGE(IDC_LIST1, &CMapTool::OnListBox)
 	ON_WM_DROPFILES()
 	ON_BN_CLICKED(IDC_BUTTON1, &CMapTool::OnBnLoadTile)
-	ON_BN_CLICKED(IDC_BUTTON2, &CMapTool::OnButtonSave)
-	ON_BN_CLICKED(IDC_BUTTON8, &CMapTool::OnButtonLoad)
 END_MESSAGE_MAP()
 
 
@@ -175,93 +173,6 @@ void CMapTool::OnBnLoadTile()
 
 		if (INVALID_HANDLE_VALUE == hFile)
 			return;
-
-		CloseHandle(hFile);
-	}
-}
-
-
-void CMapTool::OnButtonSave()
-{
-	CFileDialog Dlg(FALSE, L"dat", L"*.dat");
-
-	TCHAR szFilePath[MAX_PATH]{};
-	GetCurrentDirectory(MAX_PATH, szFilePath);
-	PathRemoveFileSpec(szFilePath);
-	lstrcat(szFilePath, L"\\Data");
-	Dlg.m_ofn.lpstrInitialDir = szFilePath;
-	if (IDOK == Dlg.DoModal())
-	{
-		CString wstrFilePath = Dlg.GetPathName();
-		//
-		HANDLE hFile = CreateFile(Dlg.GetPathName(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
-		if (INVALID_HANDLE_VALUE == hFile)
-			return;
-
-		DWORD dwByte = 0;
-		CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-		//CMiniView* pMini = dynamic_cast<CMiniView*>(pMainFrm->Get_SecondSplitter().GetPane(0, 0));
-
-		CToolView* pView = dynamic_cast<CToolView*>(pMain->Get_MainSplitter().GetPane(0, 1));
-		vector<TILE*> vecTile = pView->Get_Terrain()->Get_TileVector();
-
-		//타일 벡터를 가져옵니다. 타일벡터는 포인터나 가상함수를 가지고있지않기때문에 WriteFile로 처리해줄수있습니다,
-
-		for (auto& pTile : vecTile)
-			WriteFile(hFile, pTile, sizeof(TILE), &dwByte, nullptr);
-
-
-		CloseHandle(hFile);
-	}
-}
-
-
-void CMapTool::OnButtonLoad()
-{
-	CFileDialog Dlg(TRUE, L"dat", L"*.dat");
-
-	TCHAR szFilePath[MAX_PATH]{};
-	GetCurrentDirectory(MAX_PATH, szFilePath);
-	PathRemoveFileSpec(szFilePath);
-	lstrcat(szFilePath, L"\\Data");
-	Dlg.m_ofn.lpstrInitialDir = szFilePath;
-	if (IDOK == Dlg.DoModal())
-	{
-		CString wstrFilePath = Dlg.GetPathName();
-		//
-		HANDLE hFile = CreateFile(Dlg.GetPathName(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
-		if (INVALID_HANDLE_VALUE == hFile)
-			return;
-
-
-		CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-		CToolView* pView = dynamic_cast<CToolView*>(pMain->Get_MainSplitter().GetPane(0, 1));
-		pView->Get_Terrain()->Relese_Terrain();
-
-		DWORD dwByte = 0;
-		TILE* pTile = nullptr;
-
-		// 이렇게 하지 마셈 이왕이면 Set이라던가 아니면 Add라던가 하는 함수를 만들어서 쓰셈. 
-		// 이러면 퍼블릭이랑 다를게 일절 없음 
-		//그래서 갯함수는 대부분const 붙일수 있는데 다 붙인다. 
-		//vector<TILE*>& vectile = pView->m_pTerrain->Get_TileVector(); 
-
-
-		vector<TILE*> vecTile;
-		vecTile.reserve(TILEX * TILEY);
-		while (true)
-		{
-			pTile = new TILE;
-			ReadFile(hFile, pTile, sizeof(TILE), &dwByte, nullptr);
-			if (0 == dwByte)
-			{
-				SAFE_DELETE(pTile);
-				break;
-			}
-			vecTile.emplace_back(pTile);
-		}
-		pView->Get_Terrain()->Set_Vector(vecTile);
-		pView->Invalidate(FALSE);
 
 		CloseHandle(hFile);
 	}

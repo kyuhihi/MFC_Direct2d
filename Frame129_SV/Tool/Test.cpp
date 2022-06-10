@@ -80,7 +80,7 @@ void CTest::Initialize(void)
 
 int CTest::Update(void)
 {
-	m_ePlayer = P_STAND;
+	m_ePlayer = P_DOWN;
 
 	Key_Input();
 
@@ -101,28 +101,28 @@ void CTest::LateUpdate(void)
 
 		switch (m_ePlayer)
 		{
-		case CTest::P_STAND:
+		case CTest::P_DOWN:
 			if (3 < m_RenCount)
 			{
 				m_RenCount = 0;
 			}
 			break;
 
-		case CTest::P_WALK:
+		case CTest::P_LR:
 			if (3 < m_RenCount)
 			{
 				m_RenCount = 0;
 			}
 			break;
 
-		case CTest::P_DASH:
+		case CTest::P_UP:
 			if (3 < m_RenCount)
 			{
 				m_RenCount = 0;
 			}
 			break;
 
-		case CTest::P_ATTACK:
+		case CTest::P_IDLE:
 			break;
 		}
 		m_dwRenCount = GetTickCount();
@@ -141,7 +141,7 @@ void CTest::Render(void)
 
 	switch (m_ePlayer)
 	{
-	case CTest::P_STAND:
+	case CTest::P_DOWN:
 		m_pDevice->Get_Sprite()->Draw(m_pStand[m_RenCount]->pTexture,
 			nullptr,
 			&D3DXVECTOR3((m_pStand[m_RenCount]->tImgInfo.Width / 2), (m_pStand[m_RenCount]->tImgInfo.Height / 2), 0.f),
@@ -149,7 +149,7 @@ void CTest::Render(void)
 			D3DCOLOR_ARGB(255, 255, 255, 255));
 		break;
 
-	case CTest::P_WALK:
+	case CTest::P_LR:
 		m_pDevice->Get_Sprite()->Draw(m_pWalk[m_RenCount]->pTexture,
 			nullptr,
 			&D3DXVECTOR3((m_pWalk[m_RenCount]->tImgInfo.Width / 2), (m_pWalk[m_RenCount]->tImgInfo.Height / 2), 0.f),
@@ -157,7 +157,7 @@ void CTest::Render(void)
 			D3DCOLOR_ARGB(255, 255, 255, 255));
 		break;
 
-	case CTest::P_DASH:
+	case CTest::P_UP:
 		m_pDevice->Get_Sprite()->Draw(m_pDash[m_RenCount]->pTexture,
 			nullptr,
 			&D3DXVECTOR3((m_pDash[m_RenCount]->tImgInfo.Width / 2), (m_pDash[m_RenCount]->tImgInfo.Height / 2), 0.f),
@@ -165,7 +165,7 @@ void CTest::Render(void)
 			D3DCOLOR_ARGB(255, 255, 255, 255));
 		break;
 
-	case CTest::P_ATTACK:
+	case CTest::P_IDLE:
 		break;
 	}
 }
@@ -176,45 +176,9 @@ void CTest::Release(void)
 
 void CTest::Key_Input(void)
 {
-	if (GetAsyncKeyState(VK_UP))
-	{
-		m_ePlayer = P_DASH;
-		//m_eLPlayer = m_ePlayer;
-		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
-	}
-	if (GetAsyncKeyState(VK_DOWN))
-	{
-	}
-	if (GetAsyncKeyState(VK_LEFT))
-	{
-	}
-	if (GetAsyncKeyState(VK_RIGHT))
-	{
-	}
-
 	if (GetAsyncKeyState('W'))
 	{
-		if (P_DASH != m_ePlayer)
-		{
-			m_ePlayer = P_WALK;
-			//m_eLPlayer = m_ePlayer;
-		}
-
-		if (GetAsyncKeyState('D'))
-		{
-			m_fLR = 1.f;
-			m_fAngle = D3DXToRadian(45.f);
-			m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
-			return;
-		}
-		else if (GetAsyncKeyState('A'))
-		{
-			m_fLR = -1.f;
-			m_fAngle = D3DXToRadian(315.f);
-			m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
-			return;
-		}
-
+		m_ePlayer = P_UP;
 		m_fAngle = D3DXToRadian(0.f);
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
 		return;
@@ -222,27 +186,7 @@ void CTest::Key_Input(void)
 
 	if (GetAsyncKeyState('S'))
 	{
-		if (P_DASH != m_ePlayer)
-		{
-			m_ePlayer = P_WALK;
-			//m_eLPlayer = m_ePlayer;
-		}
-
-		if (GetAsyncKeyState('D'))
-		{
-			m_fLR = 1.f;
-			m_fAngle = D3DXToRadian(135.f);
-			m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
-			return;
-		}
-		else if (GetAsyncKeyState('A'))
-		{
-			m_fLR = -1.f;
-			m_fAngle = D3DXToRadian(225.f);
-			m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
-			return;
-		}
-
+		m_ePlayer = P_DOWN;
 		m_fAngle = D3DXToRadian(180.f);
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
 		return;
@@ -250,12 +194,7 @@ void CTest::Key_Input(void)
 
 	if (GetAsyncKeyState('D'))
 	{
-		if (P_DASH != m_ePlayer)
-		{
-			m_ePlayer = P_WALK;
-			//m_eLPlayer = m_ePlayer;
-		}
-
+		m_ePlayer = P_LR;
 		m_fLR = 1.f;
 		m_fAngle = D3DXToRadian(90.f);
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
@@ -263,12 +202,7 @@ void CTest::Key_Input(void)
 
 	if (GetAsyncKeyState('A'))
 	{
-		if (P_DASH != m_ePlayer)
-		{
-			m_ePlayer = P_WALK;
-			//m_eLPlayer = m_ePlayer;
-		}
-
+		m_ePlayer = P_LR;
 		m_fLR = -1.f;
 		m_fAngle = D3DXToRadian(270.f);
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
