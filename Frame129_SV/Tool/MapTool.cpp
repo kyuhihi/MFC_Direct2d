@@ -151,11 +151,9 @@ void CMapTool::Set_Tile(int _iID)
 
 	pView->Set_ID(_iID);
 }
-//=======================================================================
-//이거진짜 모르겠다요 해협..
-//하고싶은거 로드버튼을누르면 드래그앤 드롭이아닌 그냥 로드실행하고싶음.
-//=======================================================================
 
+
+//=======================================================================
 void CMapTool::OnBnLoadTile()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -185,30 +183,32 @@ void CMapTool::OnBnLoadTile()
 	CFileFind ff;
 	TCHAR szFilePath[MAX_PATH] = L"";
 	TCHAR szFileName[MAX_STR] = L"";
-	ff.FindFile(L"C:\\Users\\reaso\Documents\\MFC_Direct2d\\Frame129_SV\Texture\\Stage\\*.png");
-	/*while (ff.find)
-	{*/
-		CString CstrFilePath = ff.GetFilePath();
-		CString strRelative = CFileInfo::ConvertRelativePath(CstrFilePath);
-		CString strFileName = PathFindFileName(strRelative);
-
-		lstrcpy(szFileName, strFileName.GetString());
-
-		PathRemoveExtension(szFileName);
-
-		strFileName = szFileName;
-		auto iter = m_mapPngImg.find(strFileName);
-
-		if (iter == m_mapPngImg.end())
+	int ret = ff.FindFile(L"C:\\Users\\reaso\\Documents\\MFC_Direct2d\\Frame129_SV\\Texture\\Stage\\Terrain\\Tile\\*.png");
+	if (ret != 0) {
+		while (ff.FindNextFile())
 		{
-			CImage*		pPngImg = new CImage;
+			CString CstrFilePath = ff.GetFilePath();
+			CString strRelative = CFileInfo::ConvertRelativePath(CstrFilePath);
+			CString strFileName = PathFindFileName(strRelative);
 
-			pPngImg->Load(strRelative);
+			lstrcpy(szFileName, strFileName.GetString());
 
-			m_mapPngImg.insert({ strFileName, pPngImg });
-			m_ListBox.AddString(szFileName);
+			PathRemoveExtension(szFileName);
+
+			strFileName = szFileName;
+			auto iter = m_mapPngImg.find(strFileName);
+
+			if (iter == m_mapPngImg.end())
+			{
+				CImage*		pPngImg = new CImage;
+
+				pPngImg->Load(strRelative);
+
+				m_mapPngImg.insert({ strFileName, pPngImg });
+				m_ListBox.AddString(szFileName);
+			}
 		}
-	//}
+	}
 	ff.Close();
 }
 //=======================================================================
