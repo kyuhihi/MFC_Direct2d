@@ -22,7 +22,7 @@ public:
 	bool Picking(const D3DXVECTOR3& _vPos, const int& _iIndex);
 	bool Picking_Dot(const D3DXVECTOR3& _vPos, const int& _iIndex);
 	bool Set_MouseTile(D3DXVECTOR3 _vPos, int _byDrawID);
-
+	void Set_MouseReset() { m_pMouseTile.vPos = { -50.f,-50.f,0.f }; }
 public:
 	void Set_MainView(CToolView* _pMainView) { m_pMainView = _pMainView; }
 	void Set_Ratio(D3DXMATRIX* _pOut, const float& _fX, const float& _fY, const float& _fZ);

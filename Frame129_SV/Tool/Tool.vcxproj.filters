@@ -64,6 +64,9 @@
     <Filter Include="01. View\00. MyForm\99. A_Star">
       <UniqueIdentifier>{0b78b860-b11a-461d-9ef1-f12b666377cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Tree">
+      <UniqueIdentifier>{8f4cc0e9-9a5b-4ce9-8952-ba5aebd61157}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -129,6 +132,9 @@
     <ClInclude Include="A_Star.h">
       <Filter>01. View\00. MyForm\99. A_Star</Filter>
     </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>07. Tree</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -184,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="A_Star.cpp">
       <Filter>01. View\00. MyForm\99. A_Star</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>07. Tree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

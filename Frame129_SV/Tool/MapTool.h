@@ -26,14 +26,21 @@ public:
 	afx_msg void OnListBox();
 	afx_msg void OnDropFiles(HDROP hDropInfo);
 	afx_msg void OnBnLoadTile();
+	afx_msg void OnBnLoadTree();
 
 public:
 	void Horizontal_Scroll(void);
 	void Set_Tile(int _iID);
+	void Set_Tree(int _iID);
 
 public:
+//control
 	CListBox m_ListBox;
 	CStatic m_Picture;
+	CListBox m_TreeListBox;
+	CStatic m_TreePicture;
 
 	map<CString, CImage*> m_mapPngImg;
+
+	afx_msg void OnTreeListBox();
 };

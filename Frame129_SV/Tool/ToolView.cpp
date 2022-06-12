@@ -15,7 +15,6 @@
 #include "MainFrm.h"
 #include "MiniView.h"
 #include "Test.h"
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -49,7 +48,8 @@ CToolView::CToolView()
 	, m_iID(0)
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
-
+	ResetBool();
+	m_bBoolMgr[BOOL_TILE] = true;
 }
 
 CToolView::~CToolView()
@@ -96,6 +96,10 @@ void CToolView::OnInitialUpdate()
 	m_pTerrain = new CTerrain;
 	m_pTerrain->Initialize();
 	m_pTerrain->Set_MainView(this);
+
+	m_pTree = new CTree;
+	m_pTree->Initialize();
+	m_pTree->Set_MainView(this);
 
 	ZeroMemory(bKeyState, sizeof(bKeyState));
 
@@ -158,7 +162,7 @@ void CToolView::OnDraw(CDC* pDC)
 	m_pDevice->Render_Begin();
 
 	m_pTerrain->Render();
-
+	m_pTree->Render();
 	CTest::Get_Instance()->Render();
 
 	m_pDevice->Render_End();
@@ -222,8 +226,10 @@ void CToolView::OnLButtonDown(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 
 	CScrollView::OnLButtonDown(nFlags, point);
-
-	m_pTerrain->Tile_Change(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), m_iID);
+	if(m_bBoolMgr[BOOL_TILE])
+		m_pTerrain->Tile_Change(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), m_iID);
+	else if(m_bBoolMgr[BOOL_TREE])
+		m_pTree->Add_Tree ((BYTE)m_iTreeType);
 
 	Invalidate(false);
 
@@ -261,7 +267,10 @@ bool CToolView::Key_Down(int _iKey)
 void CToolView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	m_pTerrain->Set_MouseTile(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), 5);
+	if (m_bBoolMgr[BOOL_TILE])
+		m_pTerrain->Set_MouseTile(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), 5);
+	else if (m_bBoolMgr[BOOL_TREE])
+		m_pTree->Set_MouseTree(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), 5);
 
 	if (GetAsyncKeyState(VK_LBUTTON))
 	{
