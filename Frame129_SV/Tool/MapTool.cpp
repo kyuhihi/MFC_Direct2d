@@ -200,7 +200,11 @@ void CMapTool::OnBnLoadTile()
 	CFileFind ff;
 	TCHAR szFilePath[MAX_PATH] = L"";
 	TCHAR szFileName[MAX_STR] = L"";
-	int ret = ff.FindFile(L"C:\\Users\\reaso\\Documents\\MFC_Direct2d\\Frame129_SV\\Texture\\Stage\\Terrain\\Tile\\*.png");
+	//if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Cat/Down/Down0%d.png", TEX_MULTI, L"Cat", L"Down", 4)))
+
+	//int ret = ff.FindFile(L"C:\\Users\\reaso\\Documents\\MFC_Direct2d\\Frame129_SV\\Texture\\Stage\\Terrain\\Tile\\*.png");
+	int ret = ff.FindFile(L"../Texture/Stage/Terrain/Tile\\*.png");
+
 	if (ret != 0) {
 		while (ff.FindNextFile())
 		{
@@ -237,7 +241,10 @@ void CMapTool::OnBnLoadTree()
 	CFileFind ff;
 	TCHAR szFilePath[MAX_PATH] = L"";
 	TCHAR szFileName[MAX_STR] = L"";
-	int ret = ff.FindFile(L"C:\\Users\\reaso\\Documents\\MFC_Direct2d\\Frame129_SV\\Texture\\Stage\\Tree\\*.png");
+	//int ret = ff.FindFile(L"../Texture/Stage/Terrain/Tile\\*.png");
+
+	//int ret = ff.FindFile(L"C:\\Users\\reaso\\Documents\\MFC_Direct2d\\Frame129_SV\\Texture\\Stage\\Tree\\*.png");
+	int ret = ff.FindFile(L"../Texture/Stage/Tree\\*.png");
 	if (ret != 0) {
 		while (ff.FindNextFile())
 		{
