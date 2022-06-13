@@ -7,8 +7,7 @@
 
 CTerrain::CTerrain()
 	: m_pMouseTile()
-	, m_bMouseTileMove(false)
-	, m_iMouseID(25)
+	, m_iMouseID(35)
 {
 	m_vecTile.reserve(TILEX * TILEY);
 }
@@ -27,7 +26,8 @@ void CTerrain::Initialize(void)
 		return;
 	}*/
 	// ½ºÅ¸µàÅ¸ÀÏ
-	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Terrain/Tile/STile%d.png", TEX_MULTI, L"Terrain", L"STile", 26)))
+	//if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Terrain/Tile/STile%d.png", TEX_MULTI, L"Terrain", L"STile", 36)))
+	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Terrain/Tile/STile%02d.png", TEX_MULTI, L"Terrain", L"STile", 36)))
 	{
 		AfxMessageBox(L"Tile Image Insert failed");
 		return;
@@ -129,7 +129,7 @@ void CTerrain::Render(void)
 
 		++iIndex;
 //===================================================
-		if (m_bMouseTileMove) 
+		if (m_pMouseTile.vPos.x!= -50.f) 
 		{
 			const TEXINFO*	pTexInfo2;
 			if (iter->vPos == m_pMouseTile.vPos)
@@ -305,7 +305,6 @@ bool CTerrain::Picking_Dot(const D3DXVECTOR3 & _vPos, const int & _iIndex)
 
 bool CTerrain::Set_MouseTile(D3DXVECTOR3 _vPos, int  _byDrawID)
 {
-	m_bMouseTileMove = true;
 	for (auto& iter :m_vecTile)
 	{
 		if ((STILECX / 2) >= abs(iter->vPos.x - _vPos.x) && (STILECY / 2) >= abs(iter->vPos.y - _vPos.y))
