@@ -17,6 +17,9 @@
 #define		STILECX			80
 #define		STILECY			80
 
+#define		STREECX			80
+#define		STREECY			113
+
 #define		TILEX			30
 #define		TILEY			20
 
