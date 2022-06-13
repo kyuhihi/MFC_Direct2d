@@ -36,6 +36,8 @@ void CMapTool::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST1, m_ListBox);
 	DDX_Control(pDX, IDC_PICTURE, m_Picture);
+	DDX_Control(pDX, IDC_LIST2, m_TreeListBox);
+	DDX_Control(pDX, IDC_PICTURE2, m_TreePicture);
 }
 
 
@@ -43,6 +45,8 @@ BEGIN_MESSAGE_MAP(CMapTool, CDialog)
 	ON_LBN_SELCHANGE(IDC_LIST1, &CMapTool::OnListBox)
 	ON_WM_DROPFILES()
 	ON_BN_CLICKED(IDC_BUTTON1, &CMapTool::OnBnLoadTile)
+	ON_BN_CLICKED(IDC_BUTTON7, &CMapTool::OnBnLoadTree)
+	ON_LBN_SELCHANGE(IDC_LIST2, &CMapTool::OnTreeListBox)
 END_MESSAGE_MAP()
 
 
@@ -152,10 +156,24 @@ void CMapTool::Set_Tile(int _iID)
 	pView->Set_ID(_iID);
 }
 
+void CMapTool::Set_Tree(int _iID)
+{
+	CMainFrame* pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+
+	CToolView* pView = dynamic_cast<CToolView*>(pMainFrm->Get_MainSplitter().GetPane(0, 1));
+
+	pView->Set_TreeID(_iID);
+}
+
+
+//=======================================================================
 void CMapTool::OnBnLoadTile()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 
+	m_ListBox.ResetContent();
+/*======================================================================================================
+형이 만들다가 만것
 	CFileDialog Dlg(TRUE, L"png", L"*.png", OFN_OVERWRITEPROMPT, L"Data File(*.png) | *.png||", this);
 
 	TCHAR szPath[MAX_PATH] = L"";
@@ -176,4 +194,98 @@ void CMapTool::OnBnLoadTile()
 
 		CloseHandle(hFile);
 	}
+//======================================================================================================*/
+
+	TCHAR FileName;
+	CFileFind ff;
+	TCHAR szFilePath[MAX_PATH] = L"";
+	TCHAR szFileName[MAX_STR] = L"";
+	int ret = ff.FindFile(L"C:\\Users\\reaso\\Documents\\MFC_Direct2d\\Frame129_SV\\Texture\\Stage\\Terrain\\Tile\\*.png");
+	if (ret != 0) {
+		while (ff.FindNextFile())
+		{
+			CString CstrFilePath = ff.GetFilePath();
+			CString strRelative = CFileInfo::ConvertRelativePath(CstrFilePath);
+			CString strFileName = PathFindFileName(strRelative);
+
+			lstrcpy(szFileName, strFileName.GetString());
+
+			PathRemoveExtension(szFileName);
+
+			strFileName = szFileName;
+			auto iter = m_mapPngImg.find(strFileName);
+
+			if (iter == m_mapPngImg.end())
+			{
+				CImage*		pPngImg = new CImage;
+
+				pPngImg->Load(strRelative);
+
+				m_mapPngImg.insert({ strFileName, pPngImg });
+				m_ListBox.AddString(szFileName);
+			}
+		}
+	}
+	ff.Close();
+}
+
+void CMapTool::OnBnLoadTree()
+{
+	m_TreeListBox.ResetContent();
+
+	TCHAR FileName;
+	CFileFind ff;
+	TCHAR szFilePath[MAX_PATH] = L"";
+	TCHAR szFileName[MAX_STR] = L"";
+	int ret = ff.FindFile(L"C:\\Users\\reaso\\Documents\\MFC_Direct2d\\Frame129_SV\\Texture\\Stage\\Tree\\*.png");
+	if (ret != 0) {
+		while (ff.FindNextFile())
+		{
+			CString CstrFilePath = ff.GetFilePath();
+			CString strRelative = CFileInfo::ConvertRelativePath(CstrFilePath);
+			CString strFileName = PathFindFileName(strRelative);
+
+			lstrcpy(szFileName, strFileName.GetString());
+
+			PathRemoveExtension(szFileName);
+
+			strFileName = szFileName;
+			auto iter = m_mapPngImg.find(strFileName);
+
+			if (iter == m_mapPngImg.end())
+			{
+				CImage*		pPngImg = new CImage;
+
+				pPngImg->Load(strRelative);
+
+				m_mapPngImg.insert({ strFileName, pPngImg });
+				m_TreeListBox.AddString(szFileName);
+			}
+		}
+	}
+	ff.Close();
+}
+//=======================================================================
+
+
+void CMapTool::OnTreeListBox()
+{
+	UpdateData(TRUE);
+
+	CString strSelectName;
+
+	int iSelect = m_TreeListBox.GetCurSel();
+	
+	Set_Tree(iSelect);
+
+	m_TreeListBox.GetText(iSelect, strSelectName);
+
+	auto iter = m_mapPngImg.find(strSelectName);
+
+	if (iter == m_mapPngImg.end())
+		return;
+
+	m_TreePicture.SetBitmap(*(iter->second));
+
+	UpdateData(FALSE);
 }

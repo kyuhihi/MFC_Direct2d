@@ -19,6 +19,7 @@ public:
 	void Set_Stand(const TEXINFO* _pTexInfo, int _i) { m_pStand[_i] = _pTexInfo; }
 	void Set_Walk(const TEXINFO* _pTexInfo, int _i) { m_pWalk[_i] = _pTexInfo; }
 	void Set_Dash(const TEXINFO* _pTexInfo, int _i) { m_pDash[_i] = _pTexInfo; }
+	void Set_IDLE(const TEXINFO* _pTexInfo, int _i) { m_pIDLE[_i] = _pTexInfo; }
 
 	void Initialize(void);
 	int Update(void);
@@ -38,6 +39,7 @@ private:
 	const TEXINFO* m_pStand[12];
 	const TEXINFO* m_pWalk[13];
 	const TEXINFO* m_pDash[11];
+	const TEXINFO* m_pIDLE[10];
 
 	int m_RenCount;
 	DWORD m_dwRenCount;
