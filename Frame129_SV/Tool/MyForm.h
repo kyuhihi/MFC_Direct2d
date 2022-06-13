@@ -34,6 +34,8 @@ public:
 	virtual void OnInitialUpdate();
 	afx_msg void OnUnitTool();
 
+	CMapTool& Get_MapTool(void) { return m_MapTool; }
+
 private:
 	CFont m_Font;
 

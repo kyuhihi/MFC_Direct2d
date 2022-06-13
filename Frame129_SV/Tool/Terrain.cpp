@@ -5,7 +5,10 @@
 #include "ToolView.h"
 
 
-CTerrain::CTerrain() : m_pMouseTile(), m_bMouseTileMove(false)
+CTerrain::CTerrain()
+	: m_pMouseTile()
+	, m_bMouseTileMove(false)
+	, m_iMouseID(25)
 {
 	m_vecTile.reserve(TILEX * TILEY);
 }
@@ -24,7 +27,7 @@ void CTerrain::Initialize(void)
 		return;
 	}*/
 	// ½ºÅ¸µàÅ¸ÀÏ
-	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Terrain/Tile/STile%d.png", TEX_MULTI, L"Terrain", L"STile", 6)))
+	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Terrain/Tile/STile%d.png", TEX_MULTI, L"Terrain", L"STile", 26)))
 	{
 		AfxMessageBox(L"Tile Image Insert failed");
 		return;
@@ -114,7 +117,9 @@ void CTerrain::Render(void)
 			&D3DXVECTOR3(fX, fY, 0.f),
 			nullptr,
 			D3DCOLOR_ARGB(255, 255, 255, 255));
+
 		swprintf_s(szBuf, L"%d", iIndex);
+
 		CDevice::Get_Instance()->Get_Font()->DrawTextW(CDevice::Get_Instance()->Get_Sprite(),
 			szBuf,
 			lstrlen(szBuf),
@@ -129,7 +134,7 @@ void CTerrain::Render(void)
 			const TEXINFO*	pTexInfo2;
 			if (iter->vPos == m_pMouseTile.vPos)
 			{
-				pTexInfo2 = CTextureMgr::Get_Instance()->Get_Texture(L"Terrain", L"STile", 5);
+				pTexInfo2 = CTextureMgr::Get_Instance()->Get_Texture(L"Terrain", L"STile", m_iMouseID);
 			}
 			else
 				continue;
@@ -167,7 +172,7 @@ void CTerrain::Mini_Render(void)
 
 		matWorld = matScale * matTrans;
 
-		Set_Ratio(&matWorld, 0.33f, 0.33f, 0.33f);
+		Set_Ratio(&matWorld, 0.45f, 0.45f, 0.45f);
 
 		const TEXINFO* pTexInfo = CTextureMgr::Get_Instance()->Get_Texture(L"Terrain", L"STile", iter->byDrawID);
 

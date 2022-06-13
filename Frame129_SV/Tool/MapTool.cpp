@@ -47,6 +47,7 @@ BEGIN_MESSAGE_MAP(CMapTool, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMapTool::OnBnLoadTile)
 	ON_BN_CLICKED(IDC_BUTTON7, &CMapTool::OnBnLoadTree)
 	ON_LBN_SELCHANGE(IDC_LIST2, &CMapTool::OnTreeListBox)
+	ON_BN_CLICKED(IDC_BUTTON2, &CMapTool::OnSaveData)
 END_MESSAGE_MAP()
 
 
@@ -63,7 +64,7 @@ void CMapTool::OnListBox()
 
 	int iSelect = m_ListBox.GetCurSel();
 
-	Set_Tile(iSelect);
+	//Set_Tile(iSelect);
 
 	m_ListBox.GetText(iSelect, strSelectName);
 
@@ -73,6 +74,18 @@ void CMapTool::OnListBox()
 		return;
 
 	m_Picture.SetBitmap(*(iter->second));
+
+	int i = 0;
+
+	for (; i < strSelectName.GetLength(); ++i)
+	{
+		if (0 != isdigit(strSelectName[i]))
+			break;
+	}
+
+	strSelectName.Delete(0, i);
+
+	m_iDrawID = _tstoi(strSelectName);
 
 	UpdateData(FALSE);
 }
@@ -200,7 +213,6 @@ void CMapTool::OnBnLoadTile()
 	CFileFind ff;
 	TCHAR szFilePath[MAX_PATH] = L"";
 	TCHAR szFileName[MAX_STR] = L"";
-	//if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Cat/Down/Down0%d.png", TEX_MULTI, L"Cat", L"Down", 4)))
 
 	//int ret = ff.FindFile(L"C:\\Users\\reaso\\Documents\\MFC_Direct2d\\Frame129_SV\\Texture\\Stage\\Terrain\\Tile\\*.png");
 	int ret = ff.FindFile(L"../Texture/Stage/Terrain/Tile\\*.png");
@@ -217,11 +229,12 @@ void CMapTool::OnBnLoadTile()
 			PathRemoveExtension(szFileName);
 
 			strFileName = szFileName;
+
 			auto iter = m_mapPngImg.find(strFileName);
 
 			if (iter == m_mapPngImg.end())
 			{
-				CImage*		pPngImg = new CImage;
+				CImage*	pPngImg = new CImage;
 
 				pPngImg->Load(strRelative);
 
@@ -241,10 +254,10 @@ void CMapTool::OnBnLoadTree()
 	CFileFind ff;
 	TCHAR szFilePath[MAX_PATH] = L"";
 	TCHAR szFileName[MAX_STR] = L"";
-	//int ret = ff.FindFile(L"../Texture/Stage/Terrain/Tile\\*.png");
 
 	//int ret = ff.FindFile(L"C:\\Users\\reaso\\Documents\\MFC_Direct2d\\Frame129_SV\\Texture\\Stage\\Tree\\*.png");
 	int ret = ff.FindFile(L"../Texture/Stage/Tree\\*.png");
+
 	if (ret != 0) {
 		while (ff.FindNextFile())
 		{
@@ -295,4 +308,56 @@ void CMapTool::OnTreeListBox()
 	m_TreePicture.SetBitmap(*(iter->second));
 
 	UpdateData(FALSE);
+}
+
+
+void CMapTool::OnSaveData()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	CFileDialog		Dlg(FALSE,
+		L"dat",
+		L"*.dat",
+		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
+		L"Data Files(*.dat)|*.dat||",
+		this);
+
+	TCHAR	szPath[MAX_PATH] = L"";
+
+	GetCurrentDirectory(MAX_PATH, szPath);
+
+	PathRemoveFileSpec(szPath);
+
+	lstrcat(szPath, L"\\Data");
+
+	Dlg.m_ofn.lpstrInitialDir = szPath;
+
+	if (IDOK == Dlg.DoModal())
+	{
+		CString	str = Dlg.GetPathName();
+
+		const TCHAR* pGetPath = str.GetString();
+
+		HANDLE hFile = CreateFile(pGetPath, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+
+		CMainFrame*		pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+
+		CToolView*		pView = dynamic_cast<CToolView*>(pMainFrm->Get_MainSplitter().GetPane(0, 1));
+
+		CTerrain*		pTerrain = pView->Get_Terrain();
+
+		vector<TILE*>& vecTile = pTerrain->Get_VecTile();
+
+		DWORD	dwByte = 0;
+
+		for (auto& iter : vecTile)
+		{
+			WriteFile(hFile, iter, sizeof(TILE), &dwByte, nullptr);
+		}
+
+		CloseHandle(hFile);
+	}
 }

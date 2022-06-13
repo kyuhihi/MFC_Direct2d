@@ -14,14 +14,11 @@
 #define		TILECX			130
 #define		TILECY			68
 
-#define		STILECX			80
-#define		STILECY			80
-
-#define		STREECX			80
-#define		STREECY			113
+#define		STILECX			60
+#define		STILECY			60
 
 #define		TILEX			30
-#define		TILEY			20
+#define		TILEY			22
 
 #define		MIN_STR			64
 #define		MAX_STR			256

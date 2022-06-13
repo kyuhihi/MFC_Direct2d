@@ -15,6 +15,9 @@
 #include "MainFrm.h"
 #include "MiniView.h"
 #include "Test.h"
+#include "MyForm.h"
+#include "MapTool.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -226,16 +229,19 @@ void CToolView::OnLButtonDown(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 
 	CScrollView::OnLButtonDown(nFlags, point);
+
+	CMainFrame*		pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+	CMyForm*		pMyForm = dynamic_cast<CMyForm*>(pMainFrm->Get_SecondSplitter().GetPane(1, 0));
+	CMapTool*		pMapTool = &(pMyForm->Get_MapTool());
+
 	if(m_bBoolMgr[BOOL_TILE])
-		m_pTerrain->Tile_Change(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), m_iID);
+		m_pTerrain->Tile_Change(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), pMapTool->Get_iDrawID());
 	else if(m_bBoolMgr[BOOL_TREE])
 		m_pTree->Add_Tree ((BYTE)m_iTreeType);
 
 	Invalidate(false);
 
 	//
-	CMainFrame* pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-
 	CMiniView* pMini = dynamic_cast<CMiniView*>(pMainFrm->Get_SecondSplitter().GetPane(0, 0));
 
 	pMini->Invalidate(false);
@@ -268,18 +274,18 @@ void CToolView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	if (m_bBoolMgr[BOOL_TILE])
-		m_pTerrain->Set_MouseTile(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), 5);
+		m_pTerrain->Set_MouseTile(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), 25);
 	else if (m_bBoolMgr[BOOL_TREE])
 		m_pTree->Set_MouseTree(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), 5);
 
 	if (GetAsyncKeyState(VK_LBUTTON))
 	{
-		OnLButtonDown(nFlags, point);
+		//OnLButtonDown(nFlags, point);
 	}
 
 	if (GetAsyncKeyState(VK_RBUTTON))
 	{
-		OnRButtonDown(nFlags, point);
+		//OnRButtonDown(nFlags, point);
 	}
 	
 	CScrollView::OnMouseMove(nFlags, point);
@@ -290,6 +296,7 @@ void CToolView::OnDestroy()
 	CScrollView::OnDestroy();
 
 	Safe_Delete<CTerrain*>(m_pTerrain);
+	Safe_Delete<CTree*>(m_pTree);
 	CTextureMgr::Get_Instance()->Destroy_Instance();
 	m_pDevice->Destroy_Instance();
 

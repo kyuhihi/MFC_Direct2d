@@ -88,7 +88,7 @@ HRESULT CDevice::Initialize(void)
 	ZeroMemory(&tFontInfo, sizeof(D3DXFONT_DESCW));
 
 	tFontInfo.Height = 20;
-	tFontInfo.Width = 10;
+	tFontInfo.Width = 8;
 	tFontInfo.Weight = FW_HEAVY; // 폰트 굵기
 	tFontInfo.CharSet = HANGEUL_CHARSET; // 언어 국적
 	lstrcpy(tFontInfo.FaceName, L"궁서"); // 서체

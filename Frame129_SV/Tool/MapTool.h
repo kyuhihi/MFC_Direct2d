@@ -33,14 +33,19 @@ public:
 	void Set_Tile(int _iID);
 	void Set_Tree(int _iID);
 
-public:
+	int& Get_iDrawID(void) { return m_iDrawID; }
+
+private:
 //control
 	CListBox m_ListBox;
 	CStatic m_Picture;
 	CListBox m_TreeListBox;
 	CStatic m_TreePicture;
 
+	int		m_iDrawID;
 	map<CString, CImage*> m_mapPngImg;
 
 	afx_msg void OnTreeListBox();
+public:
+	afx_msg void OnSaveData();
 };
