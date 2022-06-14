@@ -12,6 +12,9 @@ private:
 	~CTextureMgr();
 
 public:
+	HRESULT	ReadImgPath(const wstring& wstrPath);
+
+public:
 	const TEXINFO*	Get_Texture(const TCHAR* pObjKey,
 								const TCHAR* pStateKey = L"",
 								const int& iCount = 0);

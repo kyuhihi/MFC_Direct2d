@@ -18,7 +18,7 @@ CTree::~CTree()
 
 void CTree::Initialize(void)
 {
-	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Tree/STree%d.png", TEX_MULTI, L"Tree", L"STree", 3)))
+	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Terrain/Tree/STree%02d.png", TEX_MULTI, L"Tree", L"STree", 3)))
 	{
 		AfxMessageBox(L"Tile Image Insert failed");
 		return;

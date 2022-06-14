@@ -2,6 +2,7 @@
 #include "Stage.h"
 #include "TextureMgr.h"
 #include "MyTerrain.h"
+#include "Player.h"
 #include "ObjMgr.h"
 
 CStage::CStage()
@@ -21,9 +22,9 @@ HRESULT CStage::Ready_Scene()
 		return E_FAIL;
 	}*/
 
-	if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Terrain/Tile/STile%d.png", TEX_MULTI, L"Terrain", L"STile", 6)))
+	if (FAILED(CTextureMgr::Get_Instance()->ReadImgPath(L"../Data/ImgPath.txt")))
 	{
-		ERR_MSG(L"Stage Tile Image Insert failed");
+		ERR_MSG(L"ImgPath Load failed");
 		return E_FAIL;
 	}
 
@@ -35,6 +36,15 @@ HRESULT CStage::Ready_Scene()
 	pObj->Initialize();
 	
 	CObjMgr::Get_Instance()->Add_Object(CObjMgr::TERRAIN, pObj);
+
+	pObj = new CPlayer;
+
+	if (nullptr == pObj)
+		return E_FAIL;
+
+	pObj->Initialize();
+
+	CObjMgr::Get_Instance()->Add_Object(CObjMgr::PLAYER, pObj);
 	
 	return S_OK;
 }

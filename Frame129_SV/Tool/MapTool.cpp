@@ -255,7 +255,7 @@ void CMapTool::OnBnLoadTree()
 	TCHAR szFileName[MAX_STR] = L"";
 
 	//int ret = ff.FindFile(L"C:\\Users\\reaso\\Documents\\MFC_Direct2d\\Frame129_SV\\Texture\\Stage\\Tree\\*.png");
-	int ret = ff.FindFile(L"../Texture/Stage/Tree\\*.png");
+	int ret = ff.FindFile(L"../Texture/Stage/Terrain/Tree\\*.png");
 
 	if (ret != 0) {
 		while (ff.FindNextFile())

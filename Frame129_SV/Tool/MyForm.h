@@ -2,7 +2,8 @@
 
 #include "UnitTool.h"
 #include "MapTool.h"
-
+#include "MySheet.h"
+#include "PathFind.h"
 
 // CMyForm Æû ºäÀÔ´Ï´Ù.
 
@@ -32,7 +33,11 @@ protected:
 
 public:
 	virtual void OnInitialUpdate();
+
 	afx_msg void OnUnitTool();
+	afx_msg void OnMapTool();
+	afx_msg void OnProperty();
+	afx_msg void OnPathFind();
 
 	CMapTool& Get_MapTool(void) { return m_MapTool; }
 
@@ -41,8 +46,11 @@ private:
 
 	CUnitTool m_UnitTool;
 	CMapTool m_MapTool;
+	CMySheet m_MySheet;
+	CPathFind m_PathFind;
+
 public:
-	afx_msg void OnMapTool();
+	
 };
 
 

@@ -64,6 +64,18 @@
     <Filter Include="07. Tree">
       <UniqueIdentifier>{8f4cc0e9-9a5b-4ce9-8952-ba5aebd61157}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. View\00. MyForm\02. PopUp">
+      <UniqueIdentifier>{57b369f3-66f9-4ac8-ae95-f7aa31b60d67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. View\00. MyForm\02. PopUp\00. MyPage1">
+      <UniqueIdentifier>{0de034d9-92ea-4c00-ba51-3577697f7136}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. View\00. MyForm\02. PopUp\01. MyPage2">
+      <UniqueIdentifier>{c5d15e50-c766-46b4-bb6f-83841a2f9a5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. View\00. MyForm\03. PathFinder">
+      <UniqueIdentifier>{468888e7-9218-4187-8b1e-41f9ea3d10cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -129,6 +141,18 @@
     <ClInclude Include="Tree.h">
       <Filter>07. Tree</Filter>
     </ClInclude>
+    <ClInclude Include="MySheet.h">
+      <Filter>01. View\00. MyForm\02. PopUp</Filter>
+    </ClInclude>
+    <ClInclude Include="MyPage2.h">
+      <Filter>01. View\00. MyForm\02. PopUp\01. MyPage2</Filter>
+    </ClInclude>
+    <ClInclude Include="MyPage1.h">
+      <Filter>01. View\00. MyForm\02. PopUp\00. MyPage1</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFind.h">
+      <Filter>01. View\00. MyForm\03. PathFinder</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -184,6 +208,18 @@
     </ClCompile>
     <ClCompile Include="Tree.cpp">
       <Filter>07. Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="MySheet.cpp">
+      <Filter>01. View\00. MyForm\02. PopUp</Filter>
+    </ClCompile>
+    <ClCompile Include="MyPage2.cpp">
+      <Filter>01. View\00. MyForm\02. PopUp\01. MyPage2</Filter>
+    </ClCompile>
+    <ClCompile Include="MyPage1.cpp">
+      <Filter>01. View\00. MyForm\02. PopUp\00. MyPage1</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFind.cpp">
+      <Filter>01. View\00. MyForm\03. PathFinder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

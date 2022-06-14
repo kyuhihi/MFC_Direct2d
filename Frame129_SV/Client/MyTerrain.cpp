@@ -115,7 +115,7 @@ void CMyTerrain::Render(void)
 
 			matWorld = matScale *  matTrans;
 
-			const TEXINFO* pTexInfo = CTextureMgr::Get_Instance()->Get_Texture(L"Terrain", L"STile", m_vecTile[iIndex]->byDrawID);
+			const TEXINFO* pTexInfo = CTextureMgr::Get_Instance()->Get_Texture(L"Terrain", L"Tile", m_vecTile[iIndex]->byDrawID);
 
 			if (nullptr == pTexInfo)
 				return;
