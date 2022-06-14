@@ -61,9 +61,6 @@
     <Filter Include="06. FileInfo">
       <UniqueIdentifier>{e7ba4d1e-dce3-4b17-b75b-8ad6f382b3ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. View\00. MyForm\99. A_Star">
-      <UniqueIdentifier>{0b78b860-b11a-461d-9ef1-f12b666377cc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07. Tree">
       <UniqueIdentifier>{8f4cc0e9-9a5b-4ce9-8952-ba5aebd61157}</UniqueIdentifier>
     </Filter>
@@ -129,9 +126,6 @@
     <ClInclude Include="FileInfo.h">
       <Filter>06. FileInfo</Filter>
     </ClInclude>
-    <ClInclude Include="A_Star.h">
-      <Filter>01. View\00. MyForm\99. A_Star</Filter>
-    </ClInclude>
     <ClInclude Include="Tree.h">
       <Filter>07. Tree</Filter>
     </ClInclude>
@@ -187,9 +181,6 @@
     </ClCompile>
     <ClCompile Include="FileInfo.cpp">
       <Filter>06. FileInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="A_Star.cpp">
-      <Filter>01. View\00. MyForm\99. A_Star</Filter>
     </ClCompile>
     <ClCompile Include="Tree.cpp">
       <Filter>07. Tree</Filter>
