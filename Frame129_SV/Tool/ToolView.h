@@ -50,7 +50,7 @@ public:
 	}
 	void Set_TreeID(int _iID) {
 		ResetBool();
-		m_pTerrain->Set_MouseReset();
+		//m_pTerrain->Set_MouseReset();
 		m_bBoolMgr[BOOL_TREE] = true;
 		m_iTreeType = _iID;
 	}

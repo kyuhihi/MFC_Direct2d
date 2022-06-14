@@ -236,8 +236,10 @@ void CToolView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	if(m_bBoolMgr[BOOL_TILE])
 		m_pTerrain->Tile_Change(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), pMapTool->Get_iDrawID());
-	else if(m_bBoolMgr[BOOL_TREE])
-		m_pTree->Add_Tree ((BYTE)m_iTreeType);
+	else if (m_bBoolMgr[BOOL_TREE]) {
+		m_pTree->Add_Tree((BYTE)m_iTreeType);
+		m_pTerrain->Tile_Change(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), NO_CHANGE_TILE);
+	}
 
 	Invalidate(false);
 
@@ -273,10 +275,14 @@ bool CToolView::Key_Down(int _iKey)
 void CToolView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	if (m_bBoolMgr[BOOL_TILE])
-		m_pTerrain->Set_MouseTile(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), 25);
-	else if (m_bBoolMgr[BOOL_TREE])
-		m_pTree->Set_MouseTree(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), 5);
+	m_pTerrain->Set_MouseTile(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), 25);
+	
+	if (m_bBoolMgr[BOOL_TREE]) {
+		const D3DXVECTOR3 TreeMouse(m_pTerrain->Get_MouseTile().vPos);
+		//m_pTree->Set_MouseTree(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), 5);
+		m_pTree->Set_MouseTree(TreeMouse, 5);
+
+	}
 
 	if (GetAsyncKeyState(VK_LBUTTON))
 	{

@@ -57,8 +57,8 @@ void CTree::Render(void)
 
 			if (nullptr == pTexInfo)
 				return;
-			float fX = 80 / 2.f;
-			float fY = 113 / 2.f;
+			float fX = STREECX / 2.f;
+			float fY = STREECY / 2.f;
 			CDevice::Get_Instance()->Get_Sprite()->SetTransform(&matWorld);
 
 			CDevice::Get_Instance()->Get_Sprite()->Draw(pTexInfo->pTexture,
@@ -72,12 +72,12 @@ void CTree::Render(void)
 	if (m_pMouseTree.vPos.x != -50.f ) {
 		D3DXMatrixIdentity(&matWorld);
 		D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
-		D3DXMatrixTranslation(&matTrans, m_pMouseTree.vPos.x - m_pMainView->GetScrollPos(0), m_pMouseTree.vPos.y - m_pMainView->GetScrollPos(1), m_pMouseTree.vPos.z);
+		D3DXMatrixTranslation(&matTrans, m_pMouseTree.vPos.x - m_pMainView->GetScrollPos(0), m_pMouseTree.vPos.y - m_pMainView->GetScrollPos(1)-(STREECY/2), m_pMouseTree.vPos.z);
 		matWorld = matScale *  matTrans;
 
 		const TEXINFO*	pTexInfo2;
-		float TreefX = 80 / 2.f;
-		float TreefY = 113 / 2.f;
+		float TreefX = STREECX / 2.f;
+		float TreefY = STREECY / 2.f;
 		CDevice::Get_Instance()->Get_Sprite()->SetTransform(&matWorld);
 
 		pTexInfo2 = CTextureMgr::Get_Instance()->Get_Texture(L"Tree", L"STree", 2);
@@ -112,8 +112,8 @@ void CTree::Add_Tree(BYTE _NewTreeType)
 {
 	TILE* pNewTree = new TILE;
 
-	pNewTree->vPos = { m_pMouseTree.vPos.x, m_pMouseTree.vPos.y, 0.f };
-	pNewTree->vSize = { (float)80, (float)113, 0.f };
+	pNewTree->vPos = { m_pMouseTree.vPos.x, m_pMouseTree.vPos.y-(STREECY/2), 0.f };
+	pNewTree->vSize = { (float)STREECX, (float)STREECY, 0.f };
 	pNewTree->byDrawID = _NewTreeType;
 	pNewTree->byOption = 1;
 

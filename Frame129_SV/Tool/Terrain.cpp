@@ -129,8 +129,8 @@ void CTerrain::Render(void)
 
 		++iIndex;
 //===================================================
-		if (m_pMouseTile.vPos.x!= -50.f) 
-		{
+	/*	if (m_pMouseTile.vPos.x!= -50.f) 
+		{*/
 			const TEXINFO*	pTexInfo2;
 			if (iter->vPos == m_pMouseTile.vPos)
 			{
@@ -143,7 +143,7 @@ void CTerrain::Render(void)
 				&D3DXVECTOR3(fX, fY, 0.f),
 				nullptr,
 				D3DCOLOR_ARGB(255, 255, 255, 255));
-		}
+		//}
 //====================================================
 		
 
@@ -216,8 +216,8 @@ void CTerrain::Tile_Change(const D3DXVECTOR3 & _vPos, const int & _byDrawID)
 
 	if (-1 == iIndex)
 		return;
-
-	m_vecTile[iIndex]->byDrawID = _byDrawID;
+	if(NO_CHANGE_TILE != _byDrawID)
+		m_vecTile[iIndex]->byDrawID = _byDrawID;
 	m_vecTile[iIndex]->byOption = 1;
 }
 

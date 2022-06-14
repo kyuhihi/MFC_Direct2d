@@ -59,12 +59,11 @@ void CMapTool::OnListBox()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 
 	UpdateData(TRUE);
-
 	CString strSelectName;
 
 	int iSelect = m_ListBox.GetCurSel();
 
-	//Set_Tile(iSelect);
+	Set_Tile(iSelect);
 
 	m_ListBox.GetText(iSelect, strSelectName);
 

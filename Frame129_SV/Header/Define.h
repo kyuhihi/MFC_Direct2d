@@ -6,6 +6,8 @@
 
 #define		OBJ_NOEVENT		0
 #define		OBJ_DEAD		1
+#define		NO_CHANGE_TILE	-100
+
 
 #define		VK_MAX			0xff
 
@@ -16,6 +18,9 @@
 
 #define		STILECX			60
 #define		STILECY			60
+
+#define		STREECX			80
+#define		STREECY			113
 
 #define		TILEX			30
 #define		TILEY			22
