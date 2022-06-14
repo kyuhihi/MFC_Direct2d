@@ -30,9 +30,6 @@ public:
 	void Set_MainView(CToolView* _pMainView) { m_pMainView = _pMainView; }
 	void Set_Ratio(D3DXMATRIX* _pOut, const float& _fX, const float& _fY, const float& _fZ);
 
-public:
-	bool m_bMouseTileMove;
-
 private:
 	vector<TILE*> m_vecTile;
 	TILE		m_pMouseTile;
