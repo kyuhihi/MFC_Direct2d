@@ -7,7 +7,7 @@
 #include "Device.h"
 #include "MainFrm.h"
 #include "ToolView.h"
-
+#include "Tree.h"
 // CMiniView
 
 IMPLEMENT_DYNCREATE(CMiniView, CView)
@@ -39,9 +39,9 @@ void CMiniView::OnDraw(CDC* pDC)
 	CToolView* pView = dynamic_cast<CToolView*>(pMainFrm->Get_MainSplitter().GetPane(0, 1));
 
 	CTerrain* pTerrain = pView->Get_Terrain();
-
+	CTree* pTree = pView->Get_Tree();
 	pTerrain->Mini_Render();
-
+	pTree->Mini_Render();
 	CDevice::Get_Instance()->Render_End(m_hWnd);
 }
 

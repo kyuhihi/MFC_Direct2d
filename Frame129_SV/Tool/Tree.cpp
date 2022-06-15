@@ -9,7 +9,6 @@ CTree::CTree()
 	Set_MouseReset();
 }
 
-
 CTree::~CTree()
 {
 	Release();
@@ -94,10 +93,43 @@ void CTree::Render(void)
 
 void CTree::Mini_Render(void)
 {
+	D3DXMATRIX		matWorld, matScale, matTrans;
+	for (auto& iter : m_vecTree)
+	{
+		D3DXMatrixIdentity(&matWorld);
+		D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
+		D3DXMatrixTranslation(&matTrans, iter->vPos.x, iter->vPos.y, iter->vPos.z);
+
+		matWorld = matScale * matTrans;
+
+		Set_Ratio(&matWorld, 0.45f, 0.45f, 0.45f);
+
+		const TEXINFO* pTexInfo = CTextureMgr::Get_Instance()->Get_Texture(L"Tree", L"STree", iter->byDrawID);
+
+		if (nullptr == pTexInfo)
+			return;
+
+		float fX = pTexInfo->tImgInfo.Width / 2.f;
+		float fY = pTexInfo->tImgInfo.Height / 2.f;
+
+		//swprintf_s(szBuf, L"%d", iIndex);
+
+		CDevice::Get_Instance()->Get_Sprite()->SetTransform(&matWorld);
+
+		CDevice::Get_Instance()->Get_Sprite()->Draw(pTexInfo->pTexture,
+			nullptr,
+			&D3DXVECTOR3(fX, fY, 0.f),
+			nullptr,
+			D3DCOLOR_ARGB(255, 255, 255, 255));
+
+	}
 }
 
 void CTree::Release(void)
 {
+	for_each(m_vecTree.begin(), m_vecTree.end(), CDeleteObj());
+	m_vecTree.clear();
+	m_vecTree.shrink_to_fit();
 }
 
 bool CTree::Set_MouseTree(D3DXVECTOR3 _vPos, int _byDrawID)
@@ -119,4 +151,19 @@ void CTree::Add_Tree(BYTE _NewTreeType)
 
 	m_vecTree.push_back(pNewTree);
 
+}
+
+void CTree::Set_Ratio(D3DXMATRIX * _pOut, const float & _fX, const float & _fY, const float & _fZ)
+{
+	// X
+	_pOut->_11 *= _fX;
+	_pOut->_21 *= _fX;
+	_pOut->_31 *= _fX;
+	_pOut->_41 *= _fX;
+	// Y
+	_pOut->_12 *= _fY;
+	_pOut->_22 *= _fY;
+	_pOut->_32 *= _fY;
+	_pOut->_42 *= _fY;
+	// Z
 }
