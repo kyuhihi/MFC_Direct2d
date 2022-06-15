@@ -25,6 +25,7 @@ public:
 	bool Set_MouseTile(D3DXVECTOR3 _vPos, int _byDrawID);
 	//void Set_MouseReset() { m_pMouseTile.vPos = { -50.f,-50.f,0.f }; }
 	const TILE Get_MouseTile() { return m_pMouseTile; }
+
 public:
 	vector<TILE*>& Get_VecTile(void) { return m_vecTile; }
 	void Set_MainView(CToolView* _pMainView) { m_pMainView = _pMainView; }

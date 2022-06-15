@@ -4,11 +4,9 @@
 #include "Device.h"
 #include "TimeMgr.h"
 
-
 CMyTerrain::CMyTerrain()
 {
 }
-
 
 CMyTerrain::~CMyTerrain()
 {

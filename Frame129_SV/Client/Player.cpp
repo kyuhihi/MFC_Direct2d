@@ -26,7 +26,7 @@ HRESULT CPlayer::Initialize(void)
 	m_tInfo.vDir = { 0.f, 0.f, 0.f };
 	m_tInfo.vLook = { 0.f, -1.f, 0.f };
 
-	m_fSpeed = 0.5f;
+	m_fSpeed = 0.1f;
 	m_fAngle = 0.f;
 
 	m_bStart = true;
@@ -46,8 +46,6 @@ HRESULT CPlayer::Initialize(void)
 
 int CPlayer::Update(void)
 {
-	m_ePlayer = P_DOWN;
-
 	Key_Input();
 
 	D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
@@ -175,10 +173,13 @@ void CPlayer::Key_Input(void)
 		m_fAngle = D3DXToRadian(270.f);
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
 	}
+	else if (GetAsyncKeyState(VK_LBUTTON))
+	{
+		
+	}
 	else 
 	{
 		m_RenCount = 0;
-		m_ePlayer = P_IDLE;
-		
+		m_ePlayer = P_IDLE;		
 	}
 }

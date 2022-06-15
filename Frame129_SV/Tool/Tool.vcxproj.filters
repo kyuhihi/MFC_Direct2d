@@ -43,9 +43,6 @@
     <Filter Include="05. Terrain">
       <UniqueIdentifier>{8a2b2f32-2820-48db-a47d-d11b65ed204e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="10. Test">
-      <UniqueIdentifier>{717e0192-24c3-4f2e-b422-76441e819067}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. View\00. MyForm">
       <UniqueIdentifier>{5fe54cd9-3b6d-4bfc-9747-f254ef03bfd5}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,9 @@
     </Filter>
     <Filter Include="01. View\00. MyForm\03. PathFinder">
       <UniqueIdentifier>{468888e7-9218-4187-8b1e-41f9ea3d10cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Test">
+      <UniqueIdentifier>{3dbba990-3a7d-4824-b572-ff511fe598d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -117,9 +117,6 @@
     <ClInclude Include="MultiTexture.h">
       <Filter>04. Manager\00. TextureMgr\Texture\Multi</Filter>
     </ClInclude>
-    <ClInclude Include="Test.h">
-      <Filter>10. Test</Filter>
-    </ClInclude>
     <ClInclude Include="Terrain.h">
       <Filter>05. Terrain</Filter>
     </ClInclude>
@@ -153,6 +150,9 @@
     <ClInclude Include="PathFind.h">
       <Filter>01. View\00. MyForm\03. PathFinder</Filter>
     </ClInclude>
+    <ClInclude Include="Test.h">
+      <Filter>99. Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -184,9 +184,6 @@
     </ClCompile>
     <ClCompile Include="MultiTexture.cpp">
       <Filter>04. Manager\00. TextureMgr\Texture\Multi</Filter>
-    </ClCompile>
-    <ClCompile Include="Test.cpp">
-      <Filter>10. Test</Filter>
     </ClCompile>
     <ClCompile Include="Terrain.cpp">
       <Filter>05. Terrain</Filter>
@@ -220,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="PathFind.cpp">
       <Filter>01. View\00. MyForm\03. PathFinder</Filter>
+    </ClCompile>
+    <ClCompile Include="Test.cpp">
+      <Filter>99. Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

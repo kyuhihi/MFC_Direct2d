@@ -33,8 +33,8 @@ typedef struct tagTile
 	BYTE		byOption;
 	BYTE		byDrawID;
 
-	//int			iIndex;
-	//int			iParentIndex;
+	int			iIndex;
+	int			iParentIndex;
 
 }TILE;
 
