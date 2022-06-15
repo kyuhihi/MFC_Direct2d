@@ -42,6 +42,8 @@ public:
 
 public:
 	CTerrain* Get_Terrain(void) { return m_pTerrain; }
+	CTree* Get_Tree(void) { return m_pTree; }
+
 	void Set_ID(int _iID) {
 		ResetBool();
 		m_pTree->Set_MouseReset();
