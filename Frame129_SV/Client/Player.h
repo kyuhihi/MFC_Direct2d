@@ -28,24 +28,16 @@ private:
 	CDevice* m_pDevice;
 
 	const TEXINFO* m_pTexInfo;
-	const TEXINFO* m_pStand[4];
-	const TEXINFO* m_pWalk[4];
-	const TEXINFO* m_pDash[4];
-	const TEXINFO* m_pIDLE[2];
 
 	int m_RenCount;
 	DWORD m_dwRenCount;
 
 	float m_fLR;
 	PLAYER m_ePlayer;
-	PLAYER m_eLPlayer;
+	//PLAYER m_eLPlayer;
 
 	float m_fSpeed;
 	float m_fAngle;
-	bool m_bStart;
-
-	INFO m_tInfo;
-	RECT m_tRect;
 
 	D3DXMATRIX matScale;
 	D3DXMATRIX matRotZ;

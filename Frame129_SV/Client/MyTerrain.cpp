@@ -184,3 +184,7 @@ HRESULT CMyTerrain::Load_Tile(const TCHAR* pFilePath)
 
 	return S_OK;
 }
+
+void CMyTerrain::Ready_Adjacency(void)
+{
+}
