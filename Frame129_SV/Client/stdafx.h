@@ -28,6 +28,7 @@
 #include <algorithm>
 #include <string>
 #include <fstream>
+#include <process.h>
 
 #ifdef _DEBUG
 

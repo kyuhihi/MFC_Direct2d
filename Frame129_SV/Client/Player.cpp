@@ -19,11 +19,11 @@ CPlayer::~CPlayer()
 
 HRESULT CPlayer::Initialize(void)
 {
-	m_tInfo.vPos = { 100.f, 100.f, 0.f };
+	m_tInfo.vPos = { STILECX, STILECY, 0.f };
 	m_tInfo.vDir = { 0.f, 0.f, 0.f };
 	m_tInfo.vLook = { 0.f, -1.f, 0.f };
 
-	m_fSpeed = 0.1f;
+	m_fSpeed = 0.2f;
 	m_fAngle = 0.f;
 
 	m_tFrame = { 0.f, 4.f };
@@ -46,7 +46,7 @@ int CPlayer::Update(void)
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixScaling(&matScale, m_fLR, 1.f, 1.f);
 	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(0.f));
-	D3DXMatrixTranslation(&matTrans, m_tInfo.vPos.x + CObj::m_vScroll.x, m_tInfo.vPos.y + CObj::m_vScroll.y, 0.f);
+	D3DXMatrixTranslation(&matTrans, m_tInfo.vPos.x - 2.5f + CObj::m_vScroll.x, m_tInfo.vPos.y - 18.f + CObj::m_vScroll.y, 0.f);
 	matWorld = matScale * matRotZ * matTrans;
 
 	return 0;
