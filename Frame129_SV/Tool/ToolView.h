@@ -7,6 +7,7 @@
 #include "Device.h"
 #include "Terrain.h"
 #include "Tree.h"
+#include "Sheep.h"
 
 class CToolDoc;
 class CToolView : public CScrollView 
@@ -43,6 +44,7 @@ public:
 public:
 	CTerrain* Get_Terrain(void) { return m_pTerrain; }
 	CTree* Get_Tree(void) { return m_pTree; }
+	CSheep* Get_Sheep(void) { return m_pSheep; }
 
 	void Set_ID(int _iID) {
 		ResetBool();
@@ -56,6 +58,13 @@ public:
 		m_bBoolMgr[BOOL_TREE] = true;
 		m_iTreeType = _iID;
 	}
+	void Set_SheepID(int _iID) {
+		ResetBool();
+		//m_pTerrain->Set_MouseReset();
+		m_bBoolMgr[BOOL_SHEEP] = true;
+		m_iSheepType = _iID;
+	}
+
 	void ResetBool() { for (int i = 0; i < BOOL_END; ++i) m_bBoolMgr[i] = false; }
 	bool Key_Down(int _iKey);
 
@@ -63,6 +72,7 @@ private:
 	CDevice* m_pDevice;
 	CTerrain* m_pTerrain;
 	CTree*	 m_pTree;
+	CSheep*	 m_pSheep;
 
 	bool bKeyState[VK_MAX];
 	bool m_bBoolMgr[BOOL_END];
@@ -70,6 +80,8 @@ private:
 	int m_iID;
 
 	int	 m_iTreeType;
+	int	 m_iSheepType;
+
 // 생성된 메시지 맵 함수
 protected:
 	DECLARE_MESSAGE_MAP()

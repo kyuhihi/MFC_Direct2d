@@ -21,6 +21,8 @@
 #define		STREECX			80
 #define		STREECY			113
 
+#define		SSHEEPCX			80
+
 #define		TILEX			30
 #define		TILEY			22
 

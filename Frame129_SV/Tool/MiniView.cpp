@@ -8,6 +8,7 @@
 #include "MainFrm.h"
 #include "ToolView.h"
 #include "Tree.h"
+#include "Sheep.h"
 // CMiniView
 
 IMPLEMENT_DYNCREATE(CMiniView, CView)
@@ -40,8 +41,10 @@ void CMiniView::OnDraw(CDC* pDC)
 
 	CTerrain* pTerrain = pView->Get_Terrain();
 	CTree* pTree = pView->Get_Tree();
+	CSheep* pSheep = pView->Get_Sheep();
 	pTerrain->Mini_Render();
 	pTree->Mini_Render();
+	pSheep->Mini_Render();
 	CDevice::Get_Instance()->Render_End(m_hWnd);
 }
 

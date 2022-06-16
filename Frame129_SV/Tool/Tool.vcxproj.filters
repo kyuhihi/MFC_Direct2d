@@ -76,6 +76,9 @@
     <Filter Include="99. Test">
       <UniqueIdentifier>{3dbba990-3a7d-4824-b572-ff511fe598d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="08. Sheep">
+      <UniqueIdentifier>{8b35d573-e76d-4596-8c2e-3a2cdd2e2519}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -153,6 +156,9 @@
     <ClInclude Include="Test.h">
       <Filter>99. Test</Filter>
     </ClInclude>
+    <ClInclude Include="Sheep.h">
+      <Filter>08. Sheep</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -220,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="Test.cpp">
       <Filter>99. Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Sheep.cpp">
+      <Filter>08. Sheep</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

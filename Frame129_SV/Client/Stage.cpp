@@ -4,6 +4,8 @@
 #include "MyTerrain.h"
 #include "Player.h"
 #include "ObjMgr.h"
+#include "MyTree.h"
+#include "MySheep.h"
 
 CStage::CStage()
 {
@@ -35,6 +37,24 @@ HRESULT CStage::Ready_Scene()
 
 	CObjMgr::Get_Instance()->Add_Object(CObjMgr::PLAYER, pObj);
 	
+	pObj = new CMyTree;
+
+	if (nullptr == pObj)
+		return E_FAIL;
+
+	pObj->Initialize();
+
+	CObjMgr::Get_Instance()->Add_Object(CObjMgr::EFFECT, pObj);
+
+	pObj = new CMySheep;
+
+	if (nullptr == pObj)
+		return E_FAIL;
+
+	pObj->Initialize();
+
+	CObjMgr::Get_Instance()->Add_Object(CObjMgr::UI, pObj);
+
 	return S_OK;
 }
 

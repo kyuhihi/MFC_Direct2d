@@ -104,6 +104,10 @@ void CToolView::OnInitialUpdate()
 	m_pTree->Initialize();
 	m_pTree->Set_MainView(this);
 
+	m_pSheep = new CSheep;
+	m_pSheep->Initialize();
+	m_pSheep->Set_MainView(this);
+
 	ZeroMemory(bKeyState, sizeof(bKeyState));
 
 	// 아래 텍스쳐
@@ -166,6 +170,7 @@ void CToolView::OnDraw(CDC* pDC)
 
 	m_pTerrain->Render();
 	m_pTree->Render();
+	m_pSheep->Render();
 	CTest::Get_Instance()->Render();
 
 	m_pDevice->Render_End();
@@ -240,6 +245,9 @@ void CToolView::OnLButtonDown(UINT nFlags, CPoint point)
 		m_pTree->Add_Tree((BYTE)m_iTreeType);
 		m_pTerrain->Tile_Change(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), NO_CHANGE_TILE);
 	}
+	else if (m_bBoolMgr[BOOL_SHEEP]) {
+		m_pSheep->Add_Sheep((BYTE)m_iSheepType);
+	}
 
 	Invalidate(false);
 
@@ -281,7 +289,11 @@ void CToolView::OnMouseMove(UINT nFlags, CPoint point)
 		const D3DXVECTOR3 TreeMouse(m_pTerrain->Get_MouseTile().vPos);
 		//m_pTree->Set_MouseTree(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), 5);
 		m_pTree->Set_MouseTree(TreeMouse, 5);
-
+	}
+	else if (m_bBoolMgr[BOOL_SHEEP]) {
+		const D3DXVECTOR3 SheepMouse(m_pTerrain->Get_MouseTile().vPos);
+		//m_pTree->Set_MouseTree(D3DXVECTOR3(float(point.x + GetScrollPos(0)), float(point.y + GetScrollPos(1)), 0.f), 5);
+		m_pSheep->Set_MouseSheep(SheepMouse, 5);
 	}
 
 	if (GetAsyncKeyState(VK_LBUTTON))
