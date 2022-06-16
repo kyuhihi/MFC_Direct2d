@@ -19,6 +19,7 @@
 #define IDC_EDIT1                       1004
 #define IDC_BUTTON7                     1004
 #define IDC_EDIT2                       1005
+#define IDC_BUTTON8                     1005
 #define IDC_EDIT3                       1006
 #define IDC_EDIT4                       1007
 #define IDC_EDIT5                       1008
@@ -28,6 +29,7 @@
 #define IDC_CHECK2                      1012
 #define IDC_LIST2                       1012
 #define IDC_CHECK3                      1013
+#define IDC_LIST3                       1013
 #define IDC_BUTTON3                     1014
 #define IDC_BUTTON4                     1015
 #define IDC_BUTTON5                     1016
@@ -36,6 +38,7 @@
 #define IDC_PICTURE                     1020
 #define IDC_PICTURE2                    1021
 #define IDC_ANIMATE2                    1022
+#define IDC_PICTURE3                    1022
 
 // Next default values for new objects
 // 

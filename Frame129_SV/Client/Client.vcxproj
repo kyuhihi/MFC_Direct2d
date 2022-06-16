@@ -159,7 +159,9 @@
     <ClInclude Include="Logo.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MultiTexture.h" />
+    <ClInclude Include="MySheep.h" />
     <ClInclude Include="MyTerrain.h" />
+    <ClInclude Include="MyTree.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="ObjMgr.h" />
     <ClInclude Include="Player.h" />
@@ -181,7 +183,9 @@
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MultiTexture.cpp" />
+    <ClCompile Include="MySheep.cpp" />
     <ClCompile Include="MyTerrain.cpp" />
+    <ClCompile Include="MyTree.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="ObjMgr.cpp" />
     <ClCompile Include="Player.cpp" />

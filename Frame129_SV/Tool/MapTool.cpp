@@ -38,6 +38,8 @@ void CMapTool::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PICTURE, m_Picture);
 	DDX_Control(pDX, IDC_LIST2, m_TreeListBox);
 	DDX_Control(pDX, IDC_PICTURE2, m_TreePicture);
+	DDX_Control(pDX, IDC_LIST3, m_SheepListBox);
+	DDX_Control(pDX, IDC_PICTURE3, m_SheepPicture);
 }
 
 
@@ -48,6 +50,8 @@ BEGIN_MESSAGE_MAP(CMapTool, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON7, &CMapTool::OnBnLoadTree)
 	ON_LBN_SELCHANGE(IDC_LIST2, &CMapTool::OnTreeListBox)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMapTool::OnSaveData)
+	ON_LBN_SELCHANGE(IDC_LIST3, &CMapTool::OnSheepListBox)
+	ON_BN_CLICKED(IDC_BUTTON8, &CMapTool::OnBnLoadSheep)
 END_MESSAGE_MAP()
 
 
@@ -177,6 +181,15 @@ void CMapTool::Set_Tree(int _iID)
 	pView->Set_TreeID(_iID);
 }
 
+void CMapTool::Set_Sheep(int _iID)
+{
+	CMainFrame* pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+
+	CToolView* pView = dynamic_cast<CToolView*>(pMainFrm->Get_MainSplitter().GetPane(0, 1));
+
+	pView->Set_SheepID(_iID);
+}
+
 
 //=======================================================================
 void CMapTool::OnBnLoadTile()
@@ -285,7 +298,45 @@ void CMapTool::OnBnLoadTree()
 	ff.Close();
 }
 //=======================================================================
+void CMapTool::OnBnLoadSheep()
+{
+	m_SheepListBox.ResetContent();
 
+	TCHAR FileName;
+	CFileFind ff;
+	TCHAR szFilePath[MAX_PATH] = L"";
+	TCHAR szFileName[MAX_STR] = L"";
+
+	//int ret = ff.FindFile(L"C:\\Users\\reaso\\Documents\\MFC_Direct2d\\Frame129_SV\\Texture\\Stage\\Tree\\*.png");
+	int ret = ff.FindFile(L"../Texture/Stage/Terrain/TSheep\\*.png");
+
+	if (ret != 0) {
+		while (ff.FindNextFile())
+		{
+			CString CstrFilePath = ff.GetFilePath();
+			CString strRelative = CFileInfo::ConvertRelativePath(CstrFilePath);
+			CString strFileName = PathFindFileName(strRelative);
+
+			lstrcpy(szFileName, strFileName.GetString());
+
+			PathRemoveExtension(szFileName);
+
+			strFileName = szFileName;
+			auto iter = m_mapPngImg.find(strFileName);
+
+			if (iter == m_mapPngImg.end())
+			{
+				CImage*		pPngImg = new CImage;
+
+				pPngImg->Load(strRelative);
+
+				m_mapPngImg.insert({ strFileName, pPngImg });
+				m_SheepListBox.AddString(szFileName);
+			}
+		}
+	}
+	ff.Close();
+}
 
 void CMapTool::OnTreeListBox()
 {
@@ -359,4 +410,123 @@ void CMapTool::OnSaveData()
 
 		CloseHandle(hFile);
 	}
+	//=========================================================
+	CFileDialog		DlgTree(FALSE,
+		L"dat",
+		L"*.dat",
+		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
+		L"Data Files(*.dat)|*.dat||",
+		this);
+
+	TCHAR	szPathTree[MAX_PATH] = L"";
+
+	GetCurrentDirectory(MAX_PATH, szPathTree);
+
+	PathRemoveFileSpec(szPathTree);
+
+	lstrcat(szPathTree, L"\\Data");
+
+	DlgTree.m_ofn.lpstrInitialDir = szPathTree;
+
+	if (IDOK == DlgTree.DoModal())
+	{
+		CString	str = DlgTree.GetPathName();
+
+		const TCHAR* pGetPath = str.GetString();
+
+		HANDLE hFile = CreateFile(pGetPath, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+
+		CMainFrame*		pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+
+		CToolView*		pView = dynamic_cast<CToolView*>(pMainFrm->Get_MainSplitter().GetPane(0, 1));
+
+		CTree*		pTree = pView->Get_Tree();
+
+		vector<TILE*>& vecTree = pTree->Get_VecTree();
+
+		DWORD	dwByte = 0;
+
+		for (auto& iter : vecTree)
+		{
+			WriteFile(hFile, iter, sizeof(TILE), &dwByte, nullptr);
+		}
+
+		CloseHandle(hFile);
+	}
+	//=========================================================
+
+	CFileDialog		DlgSheep(FALSE,
+		L"dat",
+		L"*.dat",
+		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
+		L"Data Files(*.dat)|*.dat||",
+		this);
+
+	TCHAR	szPathSheep[MAX_PATH] = L"";
+
+	GetCurrentDirectory(MAX_PATH, szPathSheep);
+
+	PathRemoveFileSpec(szPathSheep);
+
+	lstrcat(szPathSheep, L"\\Data");
+
+	DlgSheep.m_ofn.lpstrInitialDir = szPathSheep;
+
+	if (IDOK == DlgSheep.DoModal())
+	{
+		CString	str = DlgSheep.GetPathName();
+
+		const TCHAR* pGetPath = str.GetString();
+
+		HANDLE hFile = CreateFile(pGetPath, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+
+		CMainFrame*		pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+
+		CToolView*		pView = dynamic_cast<CToolView*>(pMainFrm->Get_MainSplitter().GetPane(0, 1));
+
+		CSheep*		pSheep = pView->Get_Sheep();
+
+		vector<TILE*>& vecSheep = pSheep->Get_VecSheep();
+
+		DWORD	dwByte = 0;
+
+		for (auto& iter : vecSheep)
+		{
+			WriteFile(hFile, iter, sizeof(TILE), &dwByte, nullptr);
+		}
+
+		CloseHandle(hFile);
+	}
+	//=========================================================
+
 }
+
+
+void CMapTool::OnSheepListBox()
+{
+	UpdateData(TRUE);
+
+	CString strSelectName;
+
+	int iSelect = m_SheepListBox.GetCurSel();
+
+	Set_Sheep(iSelect);
+
+	m_SheepListBox.GetText(iSelect, strSelectName);
+
+	auto iter = m_mapPngImg.find(strSelectName);
+
+	if (iter == m_mapPngImg.end())
+		return;
+
+	m_SheepPicture.SetBitmap(*(iter->second));
+
+	UpdateData(FALSE);
+}
+

@@ -2,11 +2,11 @@
 #include "Include.h"
 
 class CToolView;
-class CTree
+class CSheep
 {
 public:
-	CTree();
-	~CTree();
+	CSheep();
+	~CSheep();
 public:
 	void	Initialize(void);
 	void	Update(void);
@@ -15,16 +15,14 @@ public:
 	void	Release(void);
 public:
 	void Set_MainView(CToolView* _pMainView) { m_pMainView = _pMainView; }
-	bool Set_MouseTree(D3DXVECTOR3 _vPos, int _byDrawID);
-	void Add_Tree(BYTE _NewTreeType);
-	void Set_MouseReset() { m_pMouseTree.vPos = { -50.f,-50.f,0.f }; }
+	bool Set_MouseSheep(D3DXVECTOR3 _vPos, int _byDrawID);
+	void Add_Sheep(BYTE _NewTreeType);
+	void Set_MouseReset() { m_pMouseSheep.vPos = { -50.f,-50.f,0.f }; }
 	void Set_Ratio(D3DXMATRIX* _pOut, const float& _fX, const float& _fY, const float& _fZ);
-	vector<TILE*>& Get_VecTree(void) { return m_vecTree; }
-
+	vector<TILE*>& Get_VecSheep(void) { return m_vecSheep; }
 private:
-	vector<TILE*> m_vecTree;
-	TILE		m_pMouseTree;
+	vector<TILE*> m_vecSheep;
+	TILE		m_pMouseSheep;
 
 	CToolView* m_pMainView = nullptr;
 };
-
