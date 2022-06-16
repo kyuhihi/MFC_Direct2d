@@ -19,7 +19,7 @@ CPlayer::~CPlayer()
 
 HRESULT CPlayer::Initialize(void)
 {
-	m_tInfo.vPos = { STILECX, STILECY, 0.f };
+	m_tInfo.vPos = { STILECX, (STILECY * 7), 0.f };
 
 	m_fSpeed = 200.f;
 	m_fAngle = 0.f;
