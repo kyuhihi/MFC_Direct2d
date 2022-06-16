@@ -197,68 +197,54 @@ void CMyTerrain::Ready_Adjacency(void)
 		{
 			int	iIndex = i * TILEX + j;
 
-			// 좌상단
-
-			// 맨 윗줄이 아닌 경우 && 맨 왼쪽 줄이 아닌 경우
-			if ((0 != i) && (0 != iIndex % (TILEX * 2)))
+			// 상
+			if ((0 != i) && (!m_vecTile[iIndex - TILEX]->byOption))
 			{
-				// 홀수 줄인 경우
-				if ((0 != i % 2) && (!m_vecTile[iIndex - TILEX]->byOption))
-				{
-					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex - TILEX]);
-				}
-				// 짝수 줄인경우
-				else if ((0 == i % 2) && (!m_vecTile[iIndex - (TILEX + 1)]->byOption))
-				{
-					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex - (TILEX + 1)]);
-				}
+				m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex - TILEX]);
 			}
-			// 우 상단
-
-			// 맨 윗줄이 아닌 경우 && 맨 오른쪽 줄이 아닌 경우
-			if ((0 != i) && ((TILEX * 2 - 1) != iIndex % (TILEX * 2)))
+			// 하
+			if ((TILEY - 1 != i) && (!m_vecTile[iIndex + TILEX]->byOption))
 			{
-				// 홀수 줄인 경우
-				if ((0 != i % 2) && (!m_vecTile[iIndex - (TILEX - 1)]->byOption))
-				{
-					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex - (TILEX - 1)]);
-				}
-				// 짝수 줄인경우
-				else if ((0 == i % 2) && (!m_vecTile[iIndex - TILEX]->byOption))
-				{
-					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex - TILEX]);
-				}
+				m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex + TILEX]);
 			}
-
-			// 맨 아래 줄이 아닌 경우 && 맨 왼쪽 줄이 아닌 경우
-			if ((TILEY - 1 != i) && (0 != iIndex % (TILEX * 2)))
+			// 좌
+			if ((0 != (iIndex % TILEX)) && (!m_vecTile[iIndex - 1]->byOption))
 			{
-				// 홀수 줄인 경우
-				if ((0 != i % 2) && (!m_vecTile[iIndex + TILEX]->byOption))
-				{
-					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex + TILEX]);
-				}
-				// 짝수 줄인경우
-				else if ((0 == i % 2) && (!m_vecTile[iIndex + (TILEX - 1)]->byOption))
-				{
-					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex + (TILEX - 1)]);
-				}
+				m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex - 1]);
 			}
-
-			// 맨 아래줄이 아닌 경우 && 맨 오른쪽 줄이 아닌 경우
-			if ((TILEY - 1 != i) && ((TILEX * 2 - 1) != iIndex % (TILEX * 2)))
+			// 우
+			if (((TILEX - 1) != (iIndex % TILEX)) && (!m_vecTile[iIndex + 1]->byOption))
 			{
-				// 홀수 줄인 경우
-				if ((0 != i % 2) && (!m_vecTile[iIndex + (TILEX + 1)]->byOption))
-				{
-					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex + (TILEX + 1)]);
-				}
-				// 짝수 줄인경우
-				else if ((0 == i % 2) && (!m_vecTile[iIndex + TILEX]->byOption))
-				{
-					m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex + TILEX]);
-				}
+				m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex + 1]);
 			}
+#pragma region 대각선 코드
+
+			//// 좌상
+			//if ((0 != iIndex % (TILEX)) && (0 != i))
+			//{
+			//	if (!m_vecTile[iIndex - (TILEX + 1)]->byOption)
+			//		m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex - (TILEX + 1)]);
+			//}
+			//// 우상
+			//if (((TILEX - 1) != iIndex % (TILEX * 2)) && (0 != i))
+			//{
+			//	if (!m_vecTile[iIndex - (TILEX - 1)]->byOption)
+			//		m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex - (TILEX - 1)]);
+			//}
+			//// 좌하
+			//if ((0 != iIndex % (TILEX * 2)) && (TILEY - 1 != i))
+			//{
+			//	if (!m_vecTile[iIndex + (TILEX - 1)]->byOption)
+			//		m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex + (TILEX - 1)]);
+			//}
+			//// 우하
+			//if (((TILEX - 1) != iIndex % (TILEX * 2)) && (TILEY - 1 != i))
+			//{ 
+			//	if (!m_vecTile[iIndex + (TILEX + 1)]->byOption)
+			//		m_vecAdjacency[iIndex].push_back(m_vecTile[iIndex + (TILEX + 1)]);
+			//}
+
+#pragma endregion
 		}
 	}
 }

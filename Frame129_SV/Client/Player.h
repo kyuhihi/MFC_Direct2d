@@ -21,9 +21,8 @@ public:
 
 private:
 	enum PLAYER { P_DOWN, P_LR, P_UP, P_IDLE, P_END };
-	enum DIRECTION { DIR_LEFT, DIR_UP, DIR_RIGHT, DIR_DOWN, DIR_END };
 
-	void Key_Input(void);
+	void Move_Route(void);
 
 	CDevice* m_pDevice;
 

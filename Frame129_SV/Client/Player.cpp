@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "TextureMgr.h"
+#include "AStarMgr.h"
+#include "TimeMgr.h"
 
 CPlayer::CPlayer()
 	: m_pDevice(CDevice::Get_Instance())
 	, m_pTexInfo(nullptr)
-	, m_fLR(1.f)
 	, m_ePlayer(P_END)
-	//, m_eLPlayer(P_END)
 {
 }
 
@@ -20,28 +20,19 @@ CPlayer::~CPlayer()
 HRESULT CPlayer::Initialize(void)
 {
 	m_tInfo.vPos = { STILECX, STILECY, 0.f };
-	m_tInfo.vDir = { 0.f, 0.f, 0.f };
-	m_tInfo.vLook = { 0.f, -1.f, 0.f };
 
-	m_fSpeed = 0.2f;
+	m_fSpeed = 200.f;
 	m_fAngle = 0.f;
 
 	m_tFrame = { 0.f, 4.f };
+	m_ePlayer = P_IDLE;
+	m_fLR = 1.f;
 
 	return S_OK;
 }
 
 int CPlayer::Update(void)
 {
-	Key_Input();
-
-	// vec mat
-	D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
-	D3DXMatrixRotationZ(&matRotZ, m_fAngle);
-	D3DXMatrixTranslation(&matTrans, m_tInfo.vPos.x + CObj::m_vScroll.x, m_tInfo.vPos.y + CObj::m_vScroll.y, 0.f);
-	m_tInfo.matWorld = matScale * matRotZ * matTrans;
-	D3DXVec3TransformNormal(&m_tInfo.vDir, &m_tInfo.vLook, &m_tInfo.matWorld);
-
 	// texture mat
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixScaling(&matScale, m_fLR, 1.f, 1.f);
@@ -55,6 +46,13 @@ int CPlayer::Update(void)
 void CPlayer::Late_Update(void)
 {
 	Move_Frame();
+
+	if (GetAsyncKeyState(VK_LBUTTON))
+	{
+		CAStarMgr::Get_Instance()->Astar_Start(m_tInfo.vPos, ::Get_Mouse() - CObj::m_vScroll);
+	}
+
+	Move_Route();
 }
 
 void CPlayer::Render(void)
@@ -113,43 +111,45 @@ void CPlayer::Release(void)
 {
 }
 
-void CPlayer::Key_Input(void)
+void CPlayer::Move_Route(void)
 {
-	if (GetAsyncKeyState('W'))
+	list<TILE*>& BestList = CAStarMgr::Get_Instance()->Get_BestList();
+
+	if (!BestList.empty())
 	{
-		m_ePlayer = P_UP;
-		m_fAngle = D3DXToRadian(0.f);
-		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
-		return;
-	}
-	else if (GetAsyncKeyState('S'))
-	{
-		m_ePlayer = P_DOWN;
-		m_fAngle = D3DXToRadian(180.f);
-		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
-		return;
-	}
-	else if (GetAsyncKeyState('D'))
-	{
-		m_ePlayer = P_LR;
-		m_fLR = 1.f;
-		m_fAngle = D3DXToRadian(90.f);
-		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
-	}
-	else if (GetAsyncKeyState('A'))
-	{
-		m_ePlayer = P_LR;
-		m_fLR = -1.f;
-		m_fAngle = D3DXToRadian(270.f);
-		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed;
-	}
-	else if (GetAsyncKeyState(VK_LBUTTON))
-	{
+		int	iIndex = BestList.front()->iIndex;
+
+		D3DXVECTOR3	vDir = BestList.front()->vPos - m_tInfo.vPos;
+
+		float fDistance = D3DXVec3Length(&vDir);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		if (1.2f > vDir.x && 0.8f < vDir.x) // 우
+		{
+			m_ePlayer = P_LR;
+			m_fLR = 1.f;
+		}
+		else if (-1.2f < vDir.x && -0.8f > vDir.x) // 좌
+		{
+			m_ePlayer = P_LR;
+			m_fLR = -1.f;
+		}
+		else if (1.2f > vDir.y && 0.8f < vDir.y) // 하
+		{
+			m_ePlayer = P_DOWN; 
+		}
+		else if (-1.2f < vDir.y && -0.8f > vDir.y) // 상
+		{
+			m_ePlayer = P_UP;
+		}
 		
-	}
-	else 
-	{
-		m_RenCount = 0;
-		m_ePlayer = P_IDLE;		
+		m_tInfo.vPos += vDir * m_fSpeed * CTimeMgr::Get_Instance()->Get_TimeDelta();
+
+		// 타일에 가까워졌을 때 다음 길을 찾기 위해 맨 앞에 원소를 제거
+		if (3.f >= fDistance)
+			BestList.pop_front();
+
+		if (BestList.empty())
+			m_ePlayer = P_IDLE;
 	}
 }
