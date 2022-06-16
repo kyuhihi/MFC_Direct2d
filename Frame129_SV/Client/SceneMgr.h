@@ -2,6 +2,7 @@
 
 #include "Include.h"
 #include "Stage.h"
+#include "Logo.h"
 
 class CScene; 
 class CSceneMgr final

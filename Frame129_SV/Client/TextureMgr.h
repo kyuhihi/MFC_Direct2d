@@ -12,6 +12,10 @@ private:
 	~CTextureMgr();
 
 public:
+	const	wstring& Get_String(void) { return m_wstrFullPath; }
+	void	Set_String(wstring wstrFullPath) { m_wstrFullPath = wstrFullPath; }
+
+public:
 	HRESULT	ReadImgPath(const wstring& wstrPath);
 
 public:
@@ -30,5 +34,6 @@ public:
 
 private:
 	map<wstring, CTexture*>		m_MapTex;
+	wstring						m_wstrFullPath;
 };
 

@@ -156,6 +156,7 @@
     <ClInclude Include="AStarMgr.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Device.h" />
+    <ClInclude Include="Logo.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MultiTexture.h" />
     <ClInclude Include="MyTerrain.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="AStarMgr.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Device.cpp" />
+    <ClCompile Include="Logo.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MultiTexture.cpp" />
     <ClCompile Include="MyTerrain.cpp" />

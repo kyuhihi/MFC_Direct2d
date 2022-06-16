@@ -16,19 +16,7 @@ CStage::~CStage()
 
 HRESULT CStage::Ready_Scene()
 {
-	/*if (FAILED(CTextureMgr::Get_Instance()->InsertTexture(L"../Texture/Stage/Terrain/Tile/Tile%d.png", TEX_MULTI, L"Terrain", L"Tile", 36)))
-	{
-		ERR_MSG(L"Stage Tile Image Insert failed");
-		return E_FAIL;
-	}*/
-
-	if (FAILED(CTextureMgr::Get_Instance()->ReadImgPath(L"../Data/ImgPath.txt")))
-	{
-		ERR_MSG(L"ImgPath Load failed");
-		return E_FAIL;
-	}
-
-	CObj*	pObj = new CMyTerrain;
+	CObj* pObj = new CMyTerrain;
 
 	if (nullptr == pObj)
 		return E_FAIL;
@@ -36,6 +24,7 @@ HRESULT CStage::Ready_Scene()
 	pObj->Initialize();
 	
 	CObjMgr::Get_Instance()->Add_Object(CObjMgr::TERRAIN, pObj);
+
 
 	pObj = new CPlayer;
 

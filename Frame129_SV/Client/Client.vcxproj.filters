@@ -126,6 +126,9 @@
     <ClInclude Include="AStarMgr.h">
       <Filter>03. Manager\05. AStarMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Logo.h">
+      <Filter>01. Scene\00. Logo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -178,6 +181,9 @@
     </ClCompile>
     <ClCompile Include="AStarMgr.cpp">
       <Filter>03. Manager\05. AStarMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Logo.cpp">
+      <Filter>01. Scene\00. Logo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
