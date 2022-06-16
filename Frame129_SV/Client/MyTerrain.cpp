@@ -18,6 +18,8 @@ HRESULT CMyTerrain::Initialize(void)
 	if (FAILED(Load_Tile(L"../Data/Map.dat")))
 		return E_FAIL;
 
+	Ready_Adjacency();
+
 	return S_OK;
 }
 
