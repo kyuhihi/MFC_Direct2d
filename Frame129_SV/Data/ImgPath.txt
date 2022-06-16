@@ -2,6 +2,7 @@ Cat|Down|4|..\Texture\Stage\Cat\Down\Down%02d.png
 Cat|IDLE|4|..\Texture\Stage\Cat\IDLE\IDLE%02d.png
 Cat|Right|4|..\Texture\Stage\Cat\Right\Right%02d.png
 Cat|Up|4|..\Texture\Stage\Cat\Up\Up%02d.png
+Logo|BackGround|1|..\Texture\Stage\Logo\BackGround\BackGround%02d.png
 Logo|Button|1|..\Texture\Stage\Logo\Button\LogoButton%02d.png
 Terrain|House|3|..\Texture\Stage\Terrain\House\SHouse%02d.png
 Terrain|Tile|36|..\Texture\Stage\Terrain\Tile\STile%02d.png
