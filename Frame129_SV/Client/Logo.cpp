@@ -4,6 +4,8 @@
 #include "TextureMgr.h"
 #include "Device.h"
 
+#include "TimeMgr.h"
+
 CLogo::CLogo()
 {
 }
@@ -55,14 +57,17 @@ void CLogo::Render_Scene()
 	if (nullptr == pTexInfo)
 		return;
 
-	float		fX = pTexInfo->tImgInfo.Width / 2.f;
-	float		fY = pTexInfo->tImgInfo.Height / 2.f;
+	float fX = pTexInfo->tImgInfo.Width / 2.f;
+	float fY = pTexInfo->tImgInfo.Height / 2.f;
+
+	float fMouseX = ::Get_Mouse().x;
+	float fScrollX = ((WINCX / 2) + fMouseX) * 0.1f;
 
 	D3DXMATRIX	matWorld, matTrans, matScale;
 
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixScaling(&matScale, 6.f, 6.f, 1.f);
-	D3DXMatrixTranslation(&matTrans, WINCX / 8.f, WINCY / 2.f, 0.f);
+	D3DXMatrixTranslation(&matTrans, (WINCX / 2.f) - fScrollX, WINCY / 2.f, 0.f);
 	matWorld = matScale * matTrans;
 
 	CDevice::Get_Instance()->Get_Sprite()->SetTransform(&matWorld);
